@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Malut Store</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <link rel="stylesheet" href="css/styles.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+<header class="hero" id="inicio">
+    <div class="hero-logo-fondo">
+    <img src="images/banner/banner-malut.jpg" alt="Logo Malut Store">
+</div>
+    <div class="hero-overlay"></div>
+    <nav class="menu">
+
+        <a href="#" class="logo" id="logo-malut">
+    MALUT STORE
+</a>
+
+<button class="btn-menu-mobile" id="btnMenuMobile">
+    <i class="fa-solid fa-bars"></i>
+</button>
+
+<div class="buscador-header">
+
+    <button id="btnBuscar" class="btn-buscar">
+        <i class="fa-solid fa-magnifying-glass"></i>
+    </button>
+
+    <input
+        type="text"
+        id="buscador"
+        placeholder="Buscar productos...">
+
+    <button id="limpiarBusqueda">
+        <i class="fa-solid fa-xmark"></i>
+    </button>
+    <div id="sugerencias" class="sugerencias"></div>
+
+</div>
+        <ul>
+
+    <li><a href="#" data-seccion="inicio">Inicio</a></li>
+
+    <li class="menu-dama">
+
+        <a href="#" data-seccion="dama">Dama</a>
+
+    <div id="mega-dama" class="mega-menu">
+
+    <div class="mega-grid">
+
+    <div class="mega-filtros">
+
+        <section class="mega-columna">
+
+            <h3>Tipo</h3>
+
+            <div id="filtro-tipo-dama"></div>
+
+        </section>
+
+        <section class="mega-columna">
+
+            <h3>Marca</h3>
+
+            <div id="filtro-marca-dama"></div>
+
+        </section>
+
+        <section class="mega-columna">
+
+            <h3>Tallas</h3>
+
+            <div id="filtro-tallas-dama"></div>
+
+        </section>
+
+    </div>
+
+    <aside class="mega-imagen">
+
+       <img src="images/categories/dama.jpg" alt="Moda para dama">
+
+    </aside>
+
+</div>
+
+    <li class="menu-caballero">
+
+    <a href="#" data-seccion="caballero">Caballero</a>
+
+    <div id="mega-caballero" class="mega-menu">
+
+        <div class="mega-grid">
+
+    <div class="mega-filtros">
+
+        <section class="mega-columna">
+
+            <h3>Tipo</h3>
+
+            <div id="filtro-tipo-caballero"></div>
+
+        </section>
+
+        <section class="mega-columna">
+
+            <h3>Marca</h3>
+
+            <div id="filtro-marca-caballero"></div>
+
+        </section>
+
+        <section class="mega-columna">
+
+            <h3>Tallas</h3>
+
+            <div id="filtro-tallas-caballero"></div>
+
+        </section>
+
+    </div>
+
+    <aside class="mega-imagen">
+
+        <img src="images/categories/caballero.jpg" alt="Moda para caballero">
+
+    </aside>
+
+</div>
+
+    </div>
+
+</li>
+
+    <li class="menu-perfumes">
+
+    <a href="#" data-seccion="perfumes">Perfumes</a>
+
+    <div id="mega-perfumes" class="mega-menu">
+
+        <div class="mega-grid">
+
+    <div class="mega-filtros">
+
+        <section class="mega-columna">
+
+            <h3>Marca</h3>
+
+            <div id="filtro-marca-perfumes"></div>
+
+        </section>
+
+        <section class="mega-columna">
+
+            <h3>Género</h3>
+
+            <div id="filtro-genero-perfumes"></div>
+
+        </section>
+
+        <section class="mega-columna">
+
+            <h3>Tipo</h3>
+
+            <div id="filtro-tipo-perfumes"></div>
+
+        </section>
+
+    </div>
+
+    <aside class="mega-imagen">
+
+        <img src="images/categories/perfumes.jpg" alt="Perfumes">
+
+    </aside>
+
+</div>
+
+    </div>
+
+</li>
+
+    <li class="menu-accesorios">
+
+    <a href="#" data-seccion="accesorios">Accesorios</a>
+
+    <div id="mega-accesorios" class="mega-menu mega-derecha mega-accesorios-menu">
+
+        <div class="mega-grid">
+
+    <div class="mega-filtros">
+
+        <section class="mega-columna">
+
+            <h3>Marca</h3>
+
+            <div id="filtro-marca-accesorios"></div>
+
+        </section>
+
+        <section class="mega-columna">
+
+            <h3>Género</h3>
+
+            <div id="filtro-genero-accesorios"></div>
+
+        </section>
+
+        <section class="mega-columna">
+
+            <h3>Color</h3>
+
+            <div id="filtro-color-accesorios"></div>
+
+        </section>
+
+    </div>
+
+    <aside class="mega-imagen">
+
+        <img src="images/categories/accesorios.jpg" alt="Accesorios">
+
+    </aside>
+
+</div>
+
+    </div>
+
+</li>
+
+</ul>
+    </nav>
+
+    <!-- =====================================
+     MENÚ MÓVIL
+===================================== -->
+
+<div id="menuMobile" class="menu-mobile">
+
+    <a href="#inicio">Inicio</a>
+
+    <a href="#dama">Dama</a>
+
+    <a href="#caballero">Caballero</a>
+
+    <a href="#perfumes">Perfumes</a>
+
+    <a href="#accesorios">Accesorios</a>
+
+</div>
+
+    <div class="hero-contenido hero-desktop">
+
+    <div class="hero-imagen izquierda">
+
+    <img
+        id="hero-img-izquierda"
+        src="images/hero/hero1.jpg"
+        alt="Malut Store">
+
+</div>
+
+    <div class="hero-panel">
+
+        <h1>Calidad, estilo y atención personalizada</h1>
+
+        <p>
+            Descubre las mejores prendas, calzado,
+            perfumes y accesorios para cada ocasión.
+        </p>
+
+        <div class="botones">
+
+            <a href="#categorias" class="boton">
+                Ver Catálogo
+            </a>
+
+            <a href="https://wa.me/573107799993" class="boton-secundario">
+                Comprar por WhatsApp
+            </a>
+
+        </div>
+
+    </div>
+
+    <div class="hero-imagen derecha">
+
+    <img
+        id="hero-img-derecha"
+        src="images/hero/hero2.jpg"
+        alt="Malut Store">
+
+</div>
+
+</div>
+
+<div class="hero-mobile">
+
+    <div class="hero-mobile-texto">
+
+        <h1>Calidad, estilo y atención personalizada</h1>
+
+        <p>
+            Descubre las mejores prendas, calzado,
+            perfumes y accesorios para cada ocasión.
+        </p>
+
+    </div>
+
+    <div class="hero-mobile-galeria">
+
+        <div class="hero-mobile-img">
+
+            <img
+                id="hero-mobile-izquierda"
+                src="images/hero/hero1.jpg"
+                alt="Malut Store">
+
+        </div>
+
+        <div class="hero-mobile-img">
+
+            <img
+                id="hero-mobile-derecha"
+                src="images/hero/hero2.jpg"
+                alt="Malut Store">
+
+        </div>
+
+    </div>
+
+    <div class="hero-mobile-botones">
+
+        <a href="#categorias" class="boton">
+            Ver Catálogo
+        </a>
+
+        <a href="https://wa.me/573107799993"
+           class="boton-secundario">
+
+            Comprar por WhatsApp
+
+        </a>
+
+    </div>
+
+</div>
+
+</header>
+
+<section class="about-header">
+
+    <h2>Conoce Malut Store</h2>
+
+    <p>
+        En Malut Store creemos que vestir bien es una forma de expresar quién eres.
+        Por eso seleccionamos cuidadosamente prendas, accesorios y perfumes para
+        ofrecer calidad, estilo y una atención personalizada.
+    </p>
+
+</section>
+<section class="about">
+
+    <div class="about-image">
+        <img src="images/banner/tienda.jpg" alt="Malut Store">
+    </div>
+
+    <div class="about-text">
+
+        <div class="about-info">
+
+    <div class="info-top">
+
+        <!-- Columna izquierda -->
+        <div class="info-column">
+
+            <div class="info-item">
+                <i class="fa-solid fa-location-dot"></i>
+
+                <div>
+                    <strong>Visítanos</strong>
+
+                    <a href="https://www.google.com/maps/place/Av.+13+%237-55+a+7-1,+Br.+Cundinamarca,+C%C3%BAcuta,+Norte+de+Santander/@7.887776,-72.5126666,3a,90y,204.05h,93.43t/data=!3m7!1e1!3m5!1s8UZf0Pb84HrnpxIkeKVmlw!2e0!6shttps:%2F%2Fstreetviewpixels-pa.googleapis.com%2Fv1%2Fthumbnail%3Fcb_client%3Dmaps_sv.tactile%26w%3D900%26h%3D600%26pitch%3D-3.4297065556331603%26panoid%3D8UZf0Pb84HrnpxIkeKVmlw%26yaw%3D204.05031708361562!7i13312!8i6656!4m15!1m8!3m7!1s0x8e66458276c84a81:0xf5f578857d5f72ca!2sAv.+13+%237-55+a+7-1,+Br.+Cundinamarca,+C%C3%BAcuta,+Norte+de+Santander!3b1!8m2!3d7.8877646!4d-72.5126661!16s%2Fg%2F11g606v2g7!3m5!1s0x8e66458276c84a81:0xf5f578857d5f72ca!8m2!3d7.8877646!4d-72.5126661!16s%2Fg%2F11g606v2g7!18m1!1e1?entry=ttu&g_ep=EgoyMDI2MDcyMi4wIKXMDSoASAFQAw%3D%3D"
+                       target="_blank"
+                       rel="noopener noreferrer">
+
+                        Av. 13 # 7-64<br>
+                        Barrio Loma de Bolívar<br>
+                        Cúcuta, Norte de Santander
+
+                    </a>
+                </div>
+            </div>
+
+            
+
+        </div>
+
+        <!-- Columna derecha -->
+
+        <div class="info-column">
+
+            <div class="info-item">
+
+                <i class="fa-solid fa-share-nodes"></i>
+
+                <div>
+
+                    <strong>Síguenos</strong>
+
+                    <div class="social-icons">
+
+                        <a href="https://www.instagram.com/malutstore"
+   target="_blank"
+   rel="noopener noreferrer">
+                            <i class="fa-brands fa-instagram"></i>
+                            <span>Instagram</span>
+                        </a>
+
+                        <a href="https://www.facebook.com/share/1JWY5iNhPS/?mibextid=wwXIfr"
+   target="_blank"
+   rel="noopener noreferrer">
+                            <i class="fa-brands fa-facebook-f"></i>
+                            <span>Facebook</span>
+                        </a>
+
+                        <a href="https://www.tiktok.com/@malutstore"
+   target="_blank"
+   rel="noopener noreferrer">
+                            <i class="fa-brands fa-tiktok"></i>
+                            <span>TikTok</span>
+                        </a>
+
+                        <a href="https://wa.me/573107799993"
+   target="_blank"
+   rel="noopener noreferrer">
+                            <i class="fa-brands fa-whatsapp"></i>
+                            <span>WhatsApp</span>
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="info-item tarjeta-horario">
+                <i class="fa-solid fa-clock"></i>
+
+                <div>
+
+                    <strong>Horario de atención</strong>
+
+                    <span>
+    <strong>Lunes a sábado:</strong> 9:00 a.m. - 7:00 p.m.<br>
+    <strong>Domingos y festivos:</strong> 10:00 a.m. - 1:00 p.m.
+</span>
+
+                </div>
+
+            </div>
+
+</div>
+
+        <div class="about-button">
+
+    <a href="https://www.google.com/maps/place/Av.+13+%237-55+a+7-1,+Br.+Cundinamarca,+C%C3%BAcuta,+Norte+de+Santander/@7.887776,-72.5126666,3a,90y,204.05h,93.43t/data=!3m7!1e1!3m5!1s8UZf0Pb84HrnpxIkeKVmlw!2e0!6shttps:%2F%2Fstreetviewpixels-pa.googleapis.com%2Fv1%2Fthumbnail%3Fcb_client%3Dmaps_sv.tactile%26w%3D900%26h%3D600%26pitch%3D-3.4297065556331603%26panoid%3D8UZf0Pb84HrnpxIkeKVmlw%26yaw%3D204.05031708361562!7i13312!8i6656!4m15!1m8!3m7!1s0x8e66458276c84a81:0xf5f578857d5f72ca!2sAv.+13+%237-55+a+7-1,+Br.+Cundinamarca,+C%C3%BAcuta,+Norte+de+Santander!3b1!8m2!3d7.8877646!4d-72.5126661!16s%2Fg%2F11g606v2g7!3m5!1s0x8e66458276c84a81:0xf5f578857d5f72ca!8m2!3d7.8877646!4d-72.5126661!16s%2Fg%2F11g606v2g7!18m1!1e1?entry=ttu&g_ep=EgoyMDI2MDcyMi4wIKXMDSoASAFQAw%3D%3D"
+       class="boton"
+       target="_blank"
+       rel="noopener noreferrer">
+
+       <i class="fa-solid fa-location-dot"></i>
+Google Maps
+
+    </a>
+
+</div>
+
+    </div>
+
+
+</section>
+
+
+<section id="categorias" class="categorias">
+
+    <h2>Explora nuestras categorías</h2>
+<div class="categorias-grid">
+    <div class="categoria-card categoria-todos" data-categoria="todos">
+
+    <div class="imagen-todos">
+
+        <img src="images/categories/ver-todo.jpg" alt="Ver todo">
+
+        <div class="overlay-todos">
+
+            <h3>🛍 Ver todo</h3>
+
+            <p>Explorar catálogo completo</p>
+
+        </div>
+
+    </div>
+
+</div>
+
+        <div class="categoria-card" data-categoria="dama">
+    <img src="images/categories/dama.jpg" alt="Dama">
+    <h3>Dama</h3>
+</div>
+
+        <div class="categoria-card" data-categoria="caballero">
+    <img src="images/categories/caballero.jpg" alt="Caballero">
+    <h3>Caballero</h3>
+</div>
+
+        <div class="categoria-card" data-categoria="perfumes">
+    <img src="images/categories/perfumes.jpg" alt="Perfumes">
+    <h3>Perfumes</h3>
+</div>
+
+            <div class="categoria-card" data-categoria="accesorios">
+    <img src="images/categories/accesorios.jpg" alt="Accesorios">
+    <h3>Accesorios</h3>
+</div>
+
+    </div>
+
+</section>
+<section id="catalogo" class="productos">
+
+    <div id="nuestros-productos">
+
+    <h2>Nuestros Productos</h2>
+
+</div>
+    <!-- ======================================================
+                        DAMA
+====================================================== -->
+
+<section id="dama" class="categoria-productos">
+
+    <h3>
+        <i class="fa-solid fa-shirt"></i>
+        Dama
+    </h3>
+
+    <div class="categoria-layout">
+
+        <!-- Panel de filtros -->
+        <aside class="panel-filtros">
+
+            <button class="btn-filtros-mobile">
+                <i class="fa-solid fa-sliders"></i>
+                Filtros
+            </button>
+
+            <div class="contenido-filtros">
+
+                <h4>
+    <i class="fa-solid fa-sliders"></i>
+    Filtros
+</h4>
+<button
+    class="btn-limpiar-filtros"
+    id="limpiar-dama">
+
+    <i class="fa-solid fa-trash"></i>
+    Limpiar filtros
+
+</button>
+
+
+                <div id="panel-filtros-dama">
+
+    <!-- Aquí se crearán los filtros automáticamente -->
+
+</div>
+
+            </div>
+
+        </aside>
+
+        <!-- Productos -->
+
+        <div id="productos-dama" class="productos-grid">
+
+        </div>
+        <div id="mostrar-mas-dama" class="mostrar-mas">
+    
+
+    </div>
+    <div id="mostrar-mas-dama" class="mostrar-mas"></div>
+    </section>
+<!-- ======================================================
+                        CABALLERO
+====================================================== -->
+<section id="caballero" class="categoria-productos">
+
+    <h3>
+
+        <i class="fa-solid fa-person"></i>
+
+        Caballero
+
+    </h3>
+
+    <div class="categoria-layout">
+
+    <aside class="panel-filtros">
+
+        <button class="btn-filtros-mobile">
+            <i class="fa-solid fa-sliders"></i>
+            Filtros
+        </button>
+
+        <div class="contenido-filtros">
+
+            <h4>
+                <i class="fa-solid fa-sliders"></i>
+                Filtros
+            </h4>
+            <button
+    class="btn-limpiar-filtros"
+    id="limpiar-caballero">
+
+    <i class="fa-solid fa-trash"></i>
+    Limpiar filtros
+
+</button>
+        
+
+            <div id="panel-filtros-caballero"></div>
+
+        </div>
+
+    </aside>
+
+    <div id="productos-caballero" class="productos-grid">
+        
+    </div>
+
+</div>
+<div id="mostrar-mas-caballero" class="mostrar-mas"></div>
+</section>
+
+    <!-- ======================================================
+                        PERFUMES
+====================================================== -->
+
+<section id="perfumes" class="categoria-productos">
+
+    <h3>
+        <i class="fa-solid fa-spray-can-sparkles"></i>
+        Perfumes
+    </h3>
+
+    <div class="categoria-layout">
+
+    <aside class="panel-filtros">
+
+        <button class="btn-filtros-mobile">
+            <i class="fa-solid fa-sliders"></i>
+            Filtros
+        </button>
+
+        <div class="contenido-filtros">
+
+            <h4>
+                <i class="fa-solid fa-sliders"></i>
+                Filtros
+            </h4>
+            <button
+    class="btn-limpiar-filtros"
+    id="limpiar-perfumes">
+
+    <i class="fa-solid fa-trash"></i>
+    Limpiar filtros
+
+</button>
+
+            <div id="panel-filtros-perfumes"></div>
+
+        </div>
+
+    </aside>
+
+    <div id="productos-perfumes" class="productos-grid">
+
+    </div>
+    
+
+</div>
+<div id="mostrar-mas-perfumes" class="mostrar-mas"></div>
+
+</section>
+<!-- ======================================================
+                        ACCESORIOS
+====================================================== -->
+
+<section id="accesorios" class="categoria-productos">
+
+    <h3>
+
+        <i class="fa-solid fa-bag-shopping"></i>
+
+        Accesorios
+
+    </h3>
+
+    <div class="categoria-layout">
+
+    <aside class="panel-filtros">
+
+        <button class="btn-filtros-mobile">
+            <i class="fa-solid fa-sliders"></i>
+            Filtros
+        </button>
+
+        <div class="contenido-filtros">
+
+            <h4>
+                <i class="fa-solid fa-sliders"></i>
+                Filtros
+            </h4>
+            <button
+    class="btn-limpiar-filtros"
+    id="limpiar-accesorios">
+
+    <i class="fa-solid fa-trash"></i>
+    Limpiar filtros
+
+</button>
+
+    
+            <div id="panel-filtros-accesorios"></div>
+
+        </div>
+
+    </aside>
+
+    <div id="productos-accesorios" class="productos-grid">
+
+    </div>
+    
+
+</div>
+<div id="mostrar-mas-accesorios" class="mostrar-mas"></div>
+</section>
+
+
+<script src="js/script.js"></script>
+
+</body>
+</html>
