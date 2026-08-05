@@ -2548,6 +2548,7 @@ function llenarFiltro(categoria, filtro){
 
     break;
 
+
         case "Marca":
 
     llenarFiltroGenerico(
@@ -2590,7 +2591,17 @@ function generarPanelFiltros(categoria){
     const panel = document.getElementById("panel-filtros-" + categoria);
 
     if(!panel) return;
-const filtros = configuracionFiltros[categoria];
+let filtros = [...configuracionFiltros[categoria]];
+
+// Solo en la versión móvil de Accesorios
+if (
+    categoria === "accesorios" &&
+    window.innerWidth <= 992
+){
+
+    filtros.unshift("Tipo");
+
+}
    // Obtener todos los tipos únicos
 const tipos = obtenerValoresUnicos(
     catalogo[categoria],
