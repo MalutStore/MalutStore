@@ -2270,8 +2270,13 @@ transition: all .2s ease;
 }
 .flecha-filtro{
 
-    width:10px;
-    text-align:center;
+    display:inline-flex;
+    justify-content:center;
+    align-items:center;
+
+    width:18px;
+    flex-shrink:0;
+
 }
 .resaltar{
 
