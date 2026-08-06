@@ -314,11 +314,12 @@ else{
     ${crearBadges(producto)}
 
     <img
-        class="imagen-producto"
-        data-categoria="${categoria}"
-        data-archivo="${producto.ArchivoImagen}"
-        src="images/productos/${categoria}/${producto.ArchivoImagen}"
-        alt="${producto.Nombre}">
+    class="imagen-producto ${!producto.Disponible ? 'imagen-agotada' : ''}"
+    data-categoria="${categoria}"
+    data-archivo="${producto.ArchivoImagen}"
+    src="images/productos/${categoria}/${producto.ArchivoImagen}"
+    alt="${producto.Nombre}"
+>
 
     ${crearEstado(producto)}
 
@@ -405,20 +406,19 @@ function crearMarca(producto){
 
 function crearEstado(producto){
 
+    // Si está disponible, no mostrar nada
     if(producto.Disponible){
 
-        return `
-            <div class="estado disponible">
-                DISPONIBLE
-            </div>
-        `;
+        return "";
 
     }
 
+    // Solo mostrar cuando esté agotado
     return `
-        <div class="estado agotado">
-            AGOTADO
-        </div>
+        <p class="estado agotado">
+            <i class="fa-solid fa-xmark"></i>
+            Agotado
+        </p>
     `;
 
 }
@@ -525,7 +525,7 @@ if(color.trim().toLowerCase() === "transparente"){
              <span
         class="color-chip"
         title="${partes[0]} / ${partes[1]}"
-        data-color="${partes[0].trim()} + ${partes[1].trim()}"
+        data-color="${partes[0].trim()}+${partes[1].trim()}"
         onclick="seleccionarColor(this)"
         style="background:linear-gradient(
             90deg,
@@ -670,7 +670,7 @@ function seleccionarColor(elemento){
     const tarjeta = elemento.closest(".producto-card");
 
     // Cambiar la imagen del producto
-    cambiarImagenColor(elemento, elemento.title);
+    cambiarImagenColor(elemento, elemento.dataset.color);
 
     // Activar esta tarjeta
     activarTarjeta(tarjeta);
@@ -2888,6 +2888,7 @@ function actualizarEstadoSeleccion(tarjeta){
 // =====================================
 
 function cambiarImagenColor(elemento, color){
+   
 
     const tarjeta = elemento.closest(".producto-card");
 
@@ -2904,11 +2905,7 @@ function cambiarImagenColor(elemento, color){
     const extension = archivo.substring(archivo.lastIndexOf("."));
 
     // Convertir el color a formato de archivo
-    let nombreColor = color.toLowerCase().trim();
-
-    nombreColor = nombreColor
-        .replace(/\+/g,"-")
-        .replace(/\s+/g,"-");
+const nombreColor = color.toLowerCase().trim();
 
     const nuevaRuta =
 `images/productos/${categoria}/${nombreBase}-${nombreColor}${extension}`;

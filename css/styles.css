@@ -1075,6 +1075,17 @@ z-index:2;
     transition: opacity .35s ease;
 
 }
+
+/*====================================
+        PRODUCTO AGOTADO
+====================================*/
+
+.imagen-agotada{
+
+    filter: grayscale(100%) brightness(0.75);
+
+}
+
 /*=========================
       BADGES SUPERIORES
 ==========================*/
@@ -1162,7 +1173,7 @@ z-index:2;
 
 }
 
-.producto-card:hover .producto-imagen img{
+.producto-card:hover .producto-imagen img:not(.imagen-agotada){
 
     transform:scale(1.08);
 
