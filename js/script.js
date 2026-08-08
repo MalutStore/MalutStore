@@ -335,10 +335,23 @@ else{
 
     ${htmlPrecio}
 
+${categoria === "perfumes" ? `
 
-    <a
-    href="#"
-    class="boton-producto"
+<button
+    type="button"
+    class="boton-notas"
+    onclick="mostrarNotas(this)">
+
+    <i class="fa-solid fa-spray-can-sparkles"></i>
+    Ver notas
+
+</button>
+
+` : ""}
+
+<a
+href="#"
+class="boton-producto"
     onclick="abrirWhatsApp(event,'${categoria}','${producto.ID}')">
 
     <i class="fa-brands fa-whatsapp"></i> Comprar
@@ -350,6 +363,97 @@ else{
 </div>
 
 `;
+
+}
+// =====================================
+// Mostrar / ocultar notas del perfume
+// =====================================
+
+function mostrarNotas(boton){
+
+    const tarjeta = boton.closest(".producto-card");
+
+    const imagen = tarjeta.querySelector(".imagen-producto");
+
+    const categoria = imagen.dataset.categoria;
+
+    const archivo = imagen.dataset.archivo;
+
+    // Solo funciona para perfumes
+    if(categoria !== "perfumes") return;
+
+    // Nombre del archivo sin extensión
+    const nombreBase = archivo.substring(
+        0,
+        archivo.lastIndexOf(".")
+    );
+
+    // Extensión original
+    const extension = archivo.substring(
+        archivo.lastIndexOf(".")
+    );
+
+    // Si ya estamos mostrando las notas,
+// volver a la imagen original
+if(boton.dataset.mostrandoNotas === "true"){
+
+    imagen.style.opacity = "0";
+
+    setTimeout(() => {
+
+        imagen.src =
+            `images/productos/${categoria}/${archivo}`;
+
+        imagen.style.opacity = "1";
+
+        boton.innerHTML =
+            `<i class="fa-solid fa-spray-can-sparkles"></i> Ver notas`;
+
+        boton.dataset.mostrandoNotas = "false";
+
+    }, 150);
+
+    return;
+
+}
+
+// Crear nombre de la imagen de notas
+const archivoNotas =
+    `${nombreBase}-notas${extension}`;
+
+    // Ruta de la imagen de notas
+    const rutaNotas =
+        `images/productos/${categoria}/${archivoNotas}`;
+
+    // Comprobar si existe
+    const prueba = new Image();
+
+    prueba.onload = function(){
+
+        imagen.style.opacity = "0";
+
+        setTimeout(() => {
+
+            imagen.src = rutaNotas;
+
+            imagen.style.opacity = "1";
+
+            boton.innerHTML =
+                `<i class="fa-solid fa-arrow-left"></i> Ver perfume`;
+
+            boton.dataset.mostrandoNotas = "true";
+
+        }, 150);
+
+    };
+
+    prueba.onerror = function(){
+
+        alert("Este perfume todavía no tiene una imagen de notas.");
+
+    };
+
+    prueba.src = rutaNotas;
 
 }
 // =====================================
@@ -2814,6 +2918,17 @@ if(imagen){
 
 // Volver a deshabilitar el botón
 actualizarBotonCompra(tarjeta);
+// Reiniciar botón de notas si es un perfume
+const botonNotas = tarjeta.querySelector(".boton-notas");
+
+if(botonNotas){
+
+    botonNotas.innerHTML =
+        `<i class="fa-solid fa-spray-can-sparkles"></i> Ver notas`;
+
+    botonNotas.dataset.mostrandoNotas = "false";
+
+}
 
 tarjeta.classList.remove("activa");
 
