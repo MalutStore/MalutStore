@@ -1367,10 +1367,9 @@ cursor: pointer;
 
 .badges span{
 
-    padding:6px 12px;
+    padding:5px 11px;
 
-    font-size:.75rem;
-
+    font-size:9px;
 }
 .badges{
 
@@ -1391,21 +1390,11 @@ cursor: pointer;
 .badge-tipo,
 .badge-genero{
 
-    padding:6px 14px;
-    border-radius:20px;
-    font-size:13px;
+    padding:4px 8px;
+    border-radius:18px;
+    font-size:10px;
     font-weight:600;
     text-transform:uppercase;
-
-}
-
-.badge-tipo,
-.badge-genero{
-
-    padding:5px 12px;
-
-    font-size:11px;
-
 }
 
 .badge-tipo{
@@ -1416,6 +1405,32 @@ cursor: pointer;
 .badge-genero{
     background:#111;
     color:#fff;
+}
+.badge-tipo.tipo-original{
+    background:#c9a227;
+    color:#111;
+}
+
+.badge-tipo.tipo-1-1{
+    background:#ead9a3;
+    color:#4a4025;
+}
+/* Género de perfumes */
+
+.badge-genero.genero-hombre{
+    background:rgba(20,45,80,.78);
+    color:#fff;
+}
+
+.badge-genero.genero-mujer{
+    background:rgba(190,105,135,.72);
+    color:#fff;
+}
+
+.badge-genero.genero-unisex{
+    background:#f5f5f5;
+    color:#111;
+    border:1px solid #ddd;
 }
 .badge-oferta{
 

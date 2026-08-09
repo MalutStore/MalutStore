@@ -847,15 +847,61 @@ function crearInformacionProducto(producto, categoria){
 
         if(producto.Tipo){
 
-            html += `<span class="badge-tipo">${producto.Tipo}</span>`;
+    const tipo = producto.Tipo.toLowerCase().trim();
 
-        }
+    let claseTipo = "badge-tipo";
+
+    if(tipo === "original"){
+
+        claseTipo += " tipo-original";
+
+    }
+
+    if(tipo === "versión 1.1"){
+
+        claseTipo += " tipo-1-1";
+
+    }
+
+    html += `
+        <span class="${claseTipo}">
+            ${producto.Tipo}
+        </span>
+    `;
+
+}
 
         if(producto.Genero){
 
-            html += `<span class="badge-genero">${producto.Genero}</span>`;
+    const genero = producto.Genero.toLowerCase().trim();
 
-        }
+    let claseGenero = "badge-genero";
+
+    if(genero === "hombre"){
+
+        claseGenero += " genero-hombre";
+
+    }
+
+    if(genero === "mujer"){
+
+        claseGenero += " genero-mujer";
+
+    }
+
+    if(genero === "unisex"){
+
+        claseGenero += " genero-unisex";
+
+    }
+
+    html += `
+        <span class="${claseGenero}">
+            ${producto.Genero}
+        </span>
+    `;
+
+}
 
     }
 
