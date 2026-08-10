@@ -314,11 +314,12 @@ else{
     ${crearBadges(producto)}
 
     <img
-    class="imagen-producto ${!producto.Disponible ? 'imagen-agotada' : ''}"
-    data-categoria="${categoria}"
-    data-archivo="${producto.ArchivoImagen}"
-    src="images/productos/${categoria}/${producto.ArchivoImagen}"
-    alt="${producto.Nombre}"
+class="imagen-producto ${!producto.Disponible ? 'imagen-agotada' : ''}"
+data-categoria="${categoria}"
+data-archivo="${producto.ArchivoImagen}"
+src="images/productos/${categoria}/${producto.ArchivoImagen}"
+alt="${producto.Nombre}"
+onclick="abrirImagenProducto(this)"
 >
 
     ${crearEstado(producto)}
@@ -363,6 +364,32 @@ class="boton-producto"
 </div>
 
 `;
+
+}
+// =====================================
+// Abrir imagen del producto
+// =====================================
+
+function abrirImagenProducto(imagen){
+
+    const visor = document.getElementById("visor-imagen");
+
+    const imagenGrande = document.getElementById("imagen-ampliada");
+
+    imagenGrande.src = imagen.src;
+
+    visor.classList.add("activo");
+
+}
+// =====================================
+// Cerrar imagen del producto
+// =====================================
+
+function cerrarImagenProducto(){
+
+    const visor = document.getElementById("visor-imagen");
+
+    visor.classList.remove("activo");
 
 }
 // =====================================
