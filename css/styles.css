@@ -406,13 +406,15 @@ z-index:2;
 
 .boton{
     display:inline-block;
-    padding:18px 45px;
+    padding:8px 24px;
     background:#d4af37;
     color:#111;
     text-decoration:none;
     border-radius:40px;
     font-weight:bold;
     transition:.3s;
+    font-size:14px;
+line-height:1.25;
 }
 
 .boton:hover{
@@ -421,14 +423,14 @@ z-index:2;
 }
 .botones{
     display:flex;
-    gap:20px;
+    gap:12px;
     margin-top:20px;
 }
 
 .boton-secundario{
 
     display:inline-block;
-    padding:18px 45px;
+    padding:8px 24px;
     background:#25D366;
     color:white;
     text-decoration:none;
@@ -436,11 +438,63 @@ z-index:2;
     font-weight:bold;
     transition:.3s;
     border:none;
+    font-size:14px;
+line-height:1.25;
 }
 
 .boton-secundario:hover{
     background:#1EBE5D;
     transform:scale(1.05);
+}
+.boton-canal{
+
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+
+    padding:8px 24px;
+
+    border-radius:30px;
+
+    border:1px solid #25d366;
+
+    background:#111;
+
+    color:#fff;
+
+    text-decoration:none;
+
+    font-weight:600;
+
+    transition:.3s;
+    font-size:14px;
+line-height:1.25;
+
+}
+
+.boton-canal i{
+
+    color:#25d366;
+
+    font-size:17px;
+
+}
+
+.boton-canal:hover{
+
+    background:#575e5a;
+
+    color:#fff;
+
+    transform:translateY(-2px);
+
+}
+
+.boton-canal:hover i{
+
+    color:#fff;
+
 }
 /*=========================
    HEADER INTELIGENTE
