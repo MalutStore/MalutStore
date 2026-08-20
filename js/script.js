@@ -63,6 +63,11 @@ const configuracionFiltros = {
         "Marca",
         "Genero",
         "Color"
+    ],
+    promociones: [
+        "Tipo",
+        "Genero",
+        "Color"
     ]
 
 };
@@ -77,7 +82,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         cargarCategoria("perfumes"),
 
-        cargarCategoria("accesorios")
+        cargarCategoria("accesorios"),
+
+        cargarCategoria("promociones")
 
     ]);
 
@@ -969,6 +976,22 @@ function crearInformacionProducto(producto, categoria){
 }
 
     }
+    // Promociones
+if(categoria === "promociones"){
+
+    if(producto.Tallas){
+
+        html += crearTallas(producto.Tallas);
+
+    }
+
+    if(producto.Colores){
+
+        html += crearColores(producto.Colores);
+
+    }
+
+}
 
     // Mensaje de validación
 if(categoria !== "perfumes"){
@@ -2227,6 +2250,21 @@ const megaAccesorios = document.getElementById("mega-accesorios");
 menuAccesorios.addEventListener("mouseenter", function(){
 
     megaAccesorios.classList.add("abierto");
+
+});
+const menuPromociones = document.querySelector(".menu-promociones");
+
+const megaPromociones = document.getElementById("mega-promociones");
+
+menuPromociones.addEventListener("mouseenter", function(){
+
+    megaPromociones.classList.add("abierto");
+
+});
+
+menuPromociones.addEventListener("mouseleave", function(){
+
+    megaPromociones.classList.remove("abierto");
 
 });
 

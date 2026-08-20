@@ -825,10 +825,10 @@ line-height:1.25;
 }
 
 .categorias-grid{
-    display:flex;
+    display:grid;
+    grid-template-columns:repeat(3, 220px);
     justify-content:center;
     gap:25px;
-    flex-wrap:wrap;
 }
 .categoria-card{
     width:220px;
@@ -1986,9 +1986,82 @@ transition: all .2s ease;
     width:460px;
 
 }
+
+.mega-accesorios-menu .mega-filtros{
+
+    grid-template-columns:90px 80px 110px;
+
+    gap:8px;
+
+}
+
+.mega-accesorios-menu .mega-columna{
+
+    min-width:0;
+
+}
+
 .mega-accesorios-menu .mega-imagen{
 
-    margin-left:45px;
+    margin-left:8px;
+
+}
+/* =====================================
+   MEGA MENÚ PERFUMES
+===================================== */
+
+#mega-perfumes{
+
+    width:460px;
+
+}
+
+#mega-perfumes .mega-filtros{
+
+    grid-template-columns:90px 80px 100px;
+
+    gap:8px;
+
+}
+
+#mega-perfumes .mega-columna{
+
+    min-width:0;
+
+}
+
+#mega-perfumes .mega-imagen{
+
+    margin-left:8px;
+
+}
+/* =====================================
+   MEGA MENÚ PROMOCIONES
+===================================== */
+
+#mega-promociones{
+
+    width:460px;
+
+}
+
+#mega-promociones .mega-filtros{
+
+    grid-template-columns:80px 80px 110px;
+
+    gap:8px;
+
+}
+
+#mega-promociones .mega-columna{
+
+    min-width:0;
+
+}
+
+#mega-promociones .mega-imagen{
+
+    margin-left:8px;
 
 }
 /*=====================================
@@ -3017,15 +3090,6 @@ body{
 CATEGORÍAS - MÓVIL
 ==================================*/
 
-.categorias-grid{
-
-    display:grid;
-
-    grid-template-columns:repeat(2,1fr);
-
-    gap:16px;
-
-}
 .categorias h2{
 
     font-size:28px;
@@ -3036,19 +3100,6 @@ CATEGORÍAS - MÓVIL
 
 }
 
-/* Ver todo ocupa toda la fila */
-
-.categoria-todos{
-
-    grid-column:1 / -1;
-
-    justify-self:center;
-
-    width:100%;
-
-    max-width:150px;
-
-}
 .categorias-grid{
 
     display:grid;
