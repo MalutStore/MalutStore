@@ -3294,3 +3294,52 @@ if (window.innerWidth <= 768) {
     });
 
 }
+// =====================================
+// HISTORIA MALUT - UNA VEZ POR SESIÓN
+// =====================================
+
+document.addEventListener("DOMContentLoaded", function(){
+
+    const modalHistoria = document.getElementById("modalHistoria");
+    const cerrarHistoria = document.getElementById("cerrarHistoria");
+
+    if(!modalHistoria) return;
+
+    // Si ya se mostró durante esta sesión, no volver a mostrarla
+    if(sessionStorage.getItem("historiaMalutMostrada") === "true"){
+
+        modalHistoria.style.display = "none";
+
+    }
+
+    function cerrarModalHistoria(){
+
+        modalHistoria.style.display = "none";
+
+        sessionStorage.setItem("historiaMalutMostrada", "true");
+
+    }
+
+    // Cerrar con la X
+    if(cerrarHistoria){
+
+        cerrarHistoria.addEventListener("click", function(){
+
+            cerrarModalHistoria();
+
+        });
+
+    }
+
+    // Cerrar haciendo clic en el fondo oscuro
+    modalHistoria.addEventListener("click", function(event){
+
+        if(event.target === modalHistoria){
+
+            cerrarModalHistoria();
+
+        }
+
+    });
+
+});
