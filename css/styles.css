@@ -1352,7 +1352,7 @@ cursor: pointer;
 
 .boton-producto.deshabilitado{
 
-    background:#bdbdbd;
+    background:#7fdca1;
 
     cursor:not-allowed;
 
