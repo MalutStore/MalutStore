@@ -156,25 +156,66 @@ function mostrarProductos(productos, categoria){
 
     }
 
+    // Crear una copia de los productos
+    let productosOrdenados = [...productos];
+
+    // Solo Caballero: ordenar los productos por Tipo
+if(categoria === "caballero"){
+
+    const ordenTiposCaballero = [
+        "Franela",
+        "Camisa Polo",
+        "Buso",
+        "Conjunto deportivo",
+        "Jean",
+        "Bermuda",
+        "Pantaloneta",
+        "Tenis",
+        "Zapatos",
+        "Botas",
+        "Sandalias",
+        "Boxer",
+        "Medias"
+    ];
+
+    productosOrdenados.sort((a, b) => {
+
+        const tipoA = (a.Tipo || "").trim();
+        const tipoB = (b.Tipo || "").trim();
+
+        let indiceA = ordenTiposCaballero.indexOf(tipoA);
+        let indiceB = ordenTiposCaballero.indexOf(tipoB);
+
+        // Tipos nuevos que no estén en la lista van al final
+        if(indiceA === -1) indiceA = ordenTiposCaballero.length;
+        if(indiceB === -1) indiceB = ordenTiposCaballero.length;
+
+        return indiceA - indiceB;
+
+    });
+
+}
+
     // Obtener únicamente los productos que deben verse
     const productosMostrar =
-        productos.slice(0, productosVisibles[categoria]);
+        productosOrdenados.slice(0, productosVisibles[categoria]);
 
     // Pintar tarjetas
-productosMostrar.forEach(producto => {
+    productosMostrar.forEach(producto => {
 
-    contenedor.innerHTML += crearTarjeta(producto, categoria);
+        contenedor.innerHTML += crearTarjeta(producto, categoria);
 
-});
+    });
 
-// Inicializar el estado de los botones
-contenedor.querySelectorAll(".producto-card").forEach(tarjeta => {
+    // Inicializar el estado de los botones
+    contenedor.querySelectorAll(".producto-card").forEach(tarjeta => {
 
-    actualizarBotonCompra(tarjeta);
+        actualizarBotonCompra(tarjeta);
 
-});
-// Crear botón "Ver más"
-crearBotonMostrarMas(categoria, productos.length);
+    });
+
+    // Crear botón "Ver más"
+    crearBotonMostrarMas(categoria, productos.length);
 
 }
 // =====================================
@@ -241,7 +282,43 @@ function crearBotonMostrarMas(categoria, totalProductos){
 function mostrarMas(categoria){
 
     // Obtener todos los productos de la categoría
-    const productos = productosFiltrados[categoria] || catalogo[categoria];
+    let productos = productosFiltrados[categoria] || catalogo[categoria];
+
+// Mantener el mismo orden especial de Caballero
+if(categoria === "caballero"){
+
+    const ordenTiposCaballero = [
+        "Franela",
+        "Camisa Polo",
+        "Buso",
+        "Conjunto deportivo",
+        "Jean",
+        "Bermuda",
+        "Pantaloneta",
+        "Tenis",
+        "Zapatos",
+        "Botas",
+        "Sandalias",
+        "Boxer",
+        "Medias"
+    ];
+
+    productos = [...productos].sort((a, b) => {
+
+        const tipoA = (a.Tipo || "").trim();
+        const tipoB = (b.Tipo || "").trim();
+
+        let indiceA = ordenTiposCaballero.indexOf(tipoA);
+        let indiceB = ordenTiposCaballero.indexOf(tipoB);
+
+        if(indiceA === -1) indiceA = ordenTiposCaballero.length;
+        if(indiceB === -1) indiceB = ordenTiposCaballero.length;
+
+        return indiceA - indiceB;
+
+    });
+
+}
 
     // Desde dónde empezar
     const inicio = productosVisibles[categoria];
