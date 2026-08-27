@@ -186,7 +186,6 @@ if(categoria === "caballero"){
         let indiceA = ordenTiposCaballero.indexOf(tipoA);
         let indiceB = ordenTiposCaballero.indexOf(tipoB);
 
-        // Tipos nuevos que no estén en la lista van al final
         if(indiceA === -1) indiceA = ordenTiposCaballero.length;
         if(indiceB === -1) indiceB = ordenTiposCaballero.length;
 
@@ -196,6 +195,112 @@ if(categoria === "caballero"){
 
 }
 
+
+// Solo Dama: ordenar los productos por Tipo
+if(categoria === "dama"){
+
+    const ordenTiposDama = [
+        "Conjunto Deportivo",
+        "Conjunto",
+        "Enterizo",
+        "Licra Deportiva",
+        "Franela",
+        "Body",
+        "Camisa Polo",
+        "Jean",
+        "Short",
+        "Tenis",
+        "Sandalias"
+    ];
+
+    productosOrdenados.sort((a, b) => {
+
+        const tipoA = (a.Tipo || "").trim();
+        const tipoB = (b.Tipo || "").trim();
+
+        let indiceA = ordenTiposDama.indexOf(tipoA);
+        let indiceB = ordenTiposDama.indexOf(tipoB);
+
+        if(indiceA === -1) indiceA = ordenTiposDama.length;
+        if(indiceB === -1) indiceB = ordenTiposDama.length;
+
+        return indiceA - indiceB;
+
+    });
+
+}
+// Solo Accesorios: ordenar los productos por Tipo
+if(categoria === "accesorios"){
+
+    const ordenTiposAccesorios = [
+        "Reloj",
+        "Gorra",
+        "Billetera",
+        "Correa",
+        "Bolso",
+        "Lentes"
+    ];
+
+    productosOrdenados.sort((a, b) => {
+
+        const tipoA = (a.Tipo || "").trim();
+        const tipoB = (b.Tipo || "").trim();
+
+        let indiceA = ordenTiposAccesorios.indexOf(tipoA);
+        let indiceB = ordenTiposAccesorios.indexOf(tipoB);
+
+        if(indiceA === -1) indiceA = ordenTiposAccesorios.length;
+        if(indiceB === -1) indiceB = ordenTiposAccesorios.length;
+
+        return indiceA - indiceB;
+
+    });
+
+}
+
+// Solo Promociones: ordenar los productos por Tipo
+if(categoria === "promociones"){
+
+    const ordenTiposPromociones = [
+        "Franela",
+        "Camisa Polo",
+        "Buso",
+        "Body",
+        "Conjunto Running",
+        "Conjunto deportivo",
+        "Jean",
+        "Bermuda",
+        "Short",
+        "Pantaloneta",
+        "Tenis",
+        "Zapatos",
+        "Sandalias",
+        "Reloj",
+        "Gorra",
+        "Billetera",
+        "Correa",
+        "Bolso",
+        "Lentes",
+        "Perfume",
+        "Boxer"
+    ];
+
+    productosOrdenados.sort((a, b) => {
+
+        const tipoA = (a.Tipo || "").trim();
+        const tipoB = (b.Tipo || "").trim();
+
+        let indiceA = ordenTiposPromociones.indexOf(tipoA);
+        let indiceB = ordenTiposPromociones.indexOf(tipoB);
+
+        if(indiceA === -1) indiceA = ordenTiposPromociones.length;
+        if(indiceB === -1) indiceB = ordenTiposPromociones.length;
+
+        return indiceA - indiceB;
+
+    });
+
+}
     // Obtener únicamente los productos que deben verse
     const productosMostrar =
         productosOrdenados.slice(0, productosVisibles[categoria]);
@@ -313,6 +418,111 @@ if(categoria === "caballero"){
 
         if(indiceA === -1) indiceA = ordenTiposCaballero.length;
         if(indiceB === -1) indiceB = ordenTiposCaballero.length;
+
+        return indiceA - indiceB;
+
+    });
+
+}
+// Solo Dama: ordenar los productos por Tipo
+if(categoria === "dama"){
+
+    const ordenTiposDama = [
+        "Conjunto Deportivo",
+        "Conjunto",
+        "Enterizo",
+        "Licra Deportiva",
+        "Franela",
+        "Body",
+        "Camisa Polo",
+        "Jean",
+        "Short",
+        "Tenis",
+        "Sandalias"
+    ];
+
+    productos = [...productos].sort((a, b) => {
+
+        const tipoA = (a.Tipo || "").trim();
+        const tipoB = (b.Tipo || "").trim();
+
+        let indiceA = ordenTiposDama.indexOf(tipoA);
+        let indiceB = ordenTiposDama.indexOf(tipoB);
+
+        // Si aparece un Tipo nuevo, enviarlo al final
+        if(indiceA === -1) indiceA = ordenTiposDama.length;
+        if(indiceB === -1) indiceB = ordenTiposDama.length;
+
+        return indiceA - indiceB;
+
+    });
+
+}
+// Solo Accesorios: ordenar los productos por Tipo
+if(categoria === "accesorios"){
+
+    const ordenTiposAccesorios = [
+        "Reloj",
+        "Gorra",
+        "Billetera",
+        "Correa",
+        "Bolso",
+        "Lentes"
+    ];
+
+    productos = [...productos].sort((a, b) => {
+
+        const tipoA = (a.Tipo || "").trim();
+        const tipoB = (b.Tipo || "").trim();
+
+        let indiceA = ordenTiposAccesorios.indexOf(tipoA);
+        let indiceB = ordenTiposAccesorios.indexOf(tipoB);
+
+        if(indiceA === -1) indiceA = ordenTiposAccesorios.length;
+        if(indiceB === -1) indiceB = ordenTiposAccesorios.length;
+
+        return indiceA - indiceB;
+
+    });
+
+}
+// Solo Promociones: ordenar los productos por Tipo
+if(categoria === "promociones"){
+
+    const ordenTiposPromociones = [
+        "Franela",
+        "Camisa Polo",
+        "Buso",
+        "Body",
+        "Conjunto Running",
+        "Conjunto deportivo",
+        "Jean",
+        "Bermuda",
+        "Short",
+        "Pantaloneta",
+        "Tenis",
+        "Zapatos",
+        "Sandalias",
+        "Reloj",
+        "Gorra",
+        "Billetera",
+        "Correa",
+        "Bolso",
+        "Lentes",
+        "Perfume",
+        "Boxer"
+    ];
+
+    productos = [...productos].sort((a, b) => {
+
+        const tipoA = (a.Tipo || "").trim();
+        const tipoB = (b.Tipo || "").trim();
+
+        let indiceA = ordenTiposPromociones.indexOf(tipoA);
+        let indiceB = ordenTiposPromociones.indexOf(tipoB);
+
+        if(indiceA === -1) indiceA = ordenTiposPromociones.length;
+        if(indiceB === -1) indiceB = ordenTiposPromociones.length;
 
         return indiceA - indiceB;
 
