@@ -2064,6 +2064,35 @@ transition: all .2s ease;
     margin-left:8px;
 
 }
+/* =====================================
+   MEGA MENÚ ZAPATOS
+===================================== */
+
+#mega-zapatos{
+
+    width:560px;
+
+}
+
+#mega-zapatos .mega-filtros{
+
+    grid-template-columns:80px 80px 90px 70px;
+
+    gap:8px;
+
+}
+
+#mega-zapatos .mega-columna{
+
+    min-width:0;
+
+}
+
+#mega-zapatos .mega-imagen{
+
+    margin-left:8px;
+
+}
 /*=====================================
     FILTRO SELECCIONADO
 ======================================*/

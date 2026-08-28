@@ -177,6 +177,62 @@
 
 </li>
 
+<li class="menu-zapatos">
+
+    <a href="#" data-seccion="zapatos">Zapatos</a>
+
+    <div id="mega-zapatos" class="mega-menu">
+
+        <div class="mega-grid">
+
+            <div class="mega-filtros">
+
+                <section class="mega-columna">
+
+                    <h3>Tipo</h3>
+
+                    <div id="filtro-tipo-zapatos"></div>
+
+                </section>
+
+                <section class="mega-columna">
+
+                    <h3>Género</h3>
+
+                    <div id="filtro-genero-zapatos"></div>
+
+                </section>
+
+                <section class="mega-columna">
+
+                    <h3>Marca</h3>
+
+                    <div id="filtro-marca-zapatos"></div>
+
+                </section>
+
+                <section class="mega-columna">
+
+                    <h3>Tallas</h3>
+
+                    <div id="filtro-tallas-zapatos"></div>
+
+                </section>
+
+            </div>
+
+            <aside class="mega-imagen">
+
+                <img src="images/categories/zapatos.jpg" alt="Zapatos">
+
+            </aside>
+
+        </div>
+
+    </div>
+
+</li>
+
     <li class="menu-perfumes">
 
     <a href="#" data-seccion="perfumes">Perfumes</a>
@@ -337,6 +393,8 @@
 
     <a href="#caballero">Caballero</a>
 
+    <a href="#zapatos">Zapatos</a>
+
     <a href="#perfumes">Perfumes</a>
 
     <a href="#accesorios">Accesorios</a>
@@ -358,7 +416,7 @@
 
     <div class="hero-panel">
 
-        <h1>Calidad, estilo y atención personalizada</h1>
+        <h1>CALIDAD, ESTILO Y ATENCIÓN PERSONALIZADA</h1>
 
         <p>
             Descubre las mejores prendas, calzado,
@@ -604,53 +662,44 @@ Google Maps
 <section id="categorias" class="categorias">
 
     <h2>Explora nuestras categorías</h2>
-<div class="categorias-grid">
-    <div class="categoria-card categoria-todos" data-categoria="todos">
 
-    <div class="imagen-todos">
+    <div class="categorias-grid">
 
-        <img src="images/categories/ver-todo.jpg" alt="Ver todo">
+        <div class="categoria-card" data-categoria="dama">
+            <img src="images/categories/dama.jpg" alt="Dama">
+            <h3>Dama</h3>
+        </div>
 
-        <div class="overlay-todos">
+        <div class="categoria-card" data-categoria="caballero">
+            <img src="images/categories/caballero.jpg" alt="Caballero">
+            <h3>Caballero</h3>
+        </div>
 
-            <h3>🛍 Ver todo</h3>
+        <div class="categoria-card" data-categoria="zapatos">
+            <img src="images/categories/zapatos.jpg" alt="Zapatos">
+            <h3>Zapatos</h3>
+        </div>
 
-            <p>Explorar catálogo completo</p>
+        <div class="categoria-card" data-categoria="perfumes">
+            <img src="images/categories/perfumes.jpg" alt="Perfumes">
+            <h3>Perfumes</h3>
+        </div>
 
+        <div class="categoria-card" data-categoria="accesorios">
+            <img src="images/categories/accesorios.jpg" alt="Accesorios">
+            <h3>Accesorios</h3>
+        </div>
+
+        <div class="categoria-card" data-categoria="promociones">
+            <img src="images/categories/promociones.jpg" alt="Promociones">
+            <h3>Promociones</h3>
         </div>
 
     </div>
 
-</div>
-
-        <div class="categoria-card" data-categoria="dama">
-    <img src="images/categories/dama.jpg" alt="Dama">
-    <h3>Dama</h3>
-</div>
-
-        <div class="categoria-card" data-categoria="caballero">
-    <img src="images/categories/caballero.jpg" alt="Caballero">
-    <h3>Caballero</h3>
-</div>
-
-        <div class="categoria-card" data-categoria="perfumes">
-    <img src="images/categories/perfumes.jpg" alt="Perfumes">
-    <h3>Perfumes</h3>
-</div>
-
-            <div class="categoria-card" data-categoria="accesorios">
-    <img src="images/categories/accesorios.jpg" alt="Accesorios">
-    <h3>Accesorios</h3>
-</div>
-
-<div class="categoria-card" data-categoria="promociones">
-    <img src="images/categories/promociones.jpg" alt="Promociones">
-    <h3>Promociones</h3>
-</div>
-
-    </div>
-
 </section>
+
+
 <section id="catalogo" class="productos">
 
     <div id="nuestros-productos">
@@ -767,6 +816,58 @@ Google Maps
 
 </div>
 <div id="mostrar-mas-caballero" class="mostrar-mas"></div>
+</section>
+
+<!-- ======================================================
+                        ZAPATOS
+====================================================== -->
+
+<section id="zapatos" class="categoria-productos">
+
+    <h3>
+        <i class="fa-solid fa-shoe-prints"></i>
+        Zapatos
+    </h3>
+
+    <div class="categoria-layout">
+
+        <aside class="panel-filtros">
+
+            <button class="btn-filtros-mobile">
+                <i class="fa-solid fa-sliders"></i>
+                Filtros
+            </button>
+
+            <div class="contenido-filtros">
+
+                <h4>
+                    <i class="fa-solid fa-sliders"></i>
+                    Filtros
+                </h4>
+
+                <button
+                    class="btn-limpiar-filtros"
+                    id="limpiar-zapatos">
+
+                    <i class="fa-solid fa-trash"></i>
+                    Limpiar filtros
+
+                </button>
+
+                <div id="panel-filtros-zapatos"></div>
+
+            </div>
+
+        </aside>
+
+        <div id="productos-zapatos" class="productos-grid">
+
+        </div>
+
+    </div>
+
+    <div id="mostrar-mas-zapatos" class="mostrar-mas"></div>
+
 </section>
 
     <!-- ======================================================

@@ -53,11 +53,19 @@ const configuracionFiltros = {
         "Talla"
     ],
 
+    zapatos: [
+    "Tipo",
+    "Genero",
+    "Marca",
+    "Talla"
+],
+
     perfumes: [
         "Marca",
         "Genero",
         "Tipo"
     ],
+
 
     accesorios: [
         "Marca",
@@ -79,6 +87,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         cargarCategoria("dama"),
 
         cargarCategoria("caballero"),
+
+        cargarCategoria("zapatos"),
 
         cargarCategoria("perfumes"),
 
@@ -301,6 +311,33 @@ if(categoria === "promociones"){
     });
 
 }
+// Solo Zapatos: ordenar los productos por Tipo
+if(categoria === "zapatos"){
+
+    const ordenTiposZapatos = [
+        "Tenis",
+        "Zapato Casual",
+        "Botas",
+        "Sandalias"
+    ];
+
+    productosOrdenados.sort((a, b) => {
+
+        const tipoA = (a.Tipo || "").trim();
+        const tipoB = (b.Tipo || "").trim();
+
+        let indiceA = ordenTiposZapatos.indexOf(tipoA);
+        let indiceB = ordenTiposZapatos.indexOf(tipoB);
+
+        if(indiceA === -1) indiceA = ordenTiposZapatos.length;
+        if(indiceB === -1) indiceB = ordenTiposZapatos.length;
+
+        return indiceA - indiceB;
+
+    });
+
+}
+
     // Obtener únicamente los productos que deben verse
     const productosMostrar =
         productosOrdenados.slice(0, productosVisibles[categoria]);
@@ -523,6 +560,33 @@ if(categoria === "promociones"){
 
         if(indiceA === -1) indiceA = ordenTiposPromociones.length;
         if(indiceB === -1) indiceB = ordenTiposPromociones.length;
+
+        return indiceA - indiceB;
+
+    });
+
+}
+
+// Solo Zapatos: ordenar los productos por Tipo
+if(categoria === "zapatos"){
+
+    const ordenTiposZapatos = [
+        "Tenis",
+        "Zapato Casual",
+        "Botas",
+        "Sandalias"
+    ];
+
+    productos.sort((a, b) => {
+
+        const tipoA = (a.Tipo || "").trim();
+        const tipoB = (b.Tipo || "").trim();
+
+        let indiceA = ordenTiposZapatos.indexOf(tipoA);
+        let indiceB = ordenTiposZapatos.indexOf(tipoB);
+
+        if(indiceA === -1) indiceA = ordenTiposZapatos.length;
+        if(indiceB === -1) indiceB = ordenTiposZapatos.length;
 
         return indiceA - indiceB;
 
@@ -1229,7 +1293,11 @@ function crearInformacionProducto(producto, categoria){
     html += '</div>';
 
     // Dama y Caballero
-    if(categoria === "dama" || categoria === "caballero"){
+    if(
+    categoria === "dama" ||
+    categoria === "caballero" ||
+    categoria === "zapatos"
+){
 
         if(producto.Tallas){
 
@@ -2515,6 +2583,23 @@ menuCaballero.addEventListener("mouseleave", function(){
     megaCaballero.classList.remove("abierto");
 
 });
+
+const menuZapatos = document.querySelector(".menu-zapatos");
+
+const megaZapatos = document.getElementById("mega-zapatos");
+
+menuZapatos.addEventListener("mouseenter", function(){
+
+    megaZapatos.classList.add("abierto");
+
+});
+
+menuZapatos.addEventListener("mouseleave", function(){
+
+    megaZapatos.classList.remove("abierto");
+
+});
+
 const menuPerfumes = document.querySelector(".menu-perfumes");
 
 const megaPerfumes = document.getElementById("mega-perfumes");
