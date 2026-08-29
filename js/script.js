@@ -68,10 +68,12 @@ const configuracionFiltros = {
 
 
     accesorios: [
-        "Marca",
-        "Genero",
-        "Color"
-    ],
+    "Tipo",
+    "Marca",
+    "Genero",
+    "Color"
+],
+
     promociones: [
         "Tipo",
         "Genero",
@@ -1075,6 +1077,7 @@ fucsia:"#ff1493",
         lila:"#b39ddb",
         verde:"#43a047",
         oliva:"#556b2f",
+        lima:"#bfff00",
         amarillo:"#fdd835",
         naranja:"#fb8c00",
         
