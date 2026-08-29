@@ -182,9 +182,6 @@ if(categoria === "caballero"){
         "Jean",
         "Bermuda",
         "Pantaloneta",
-        "Tenis",
-        "Zapatos",
-        "Botas",
         "Sandalias",
         "Boxer",
         "Medias"
@@ -220,9 +217,7 @@ if(categoria === "dama"){
         "Body",
         "Camisa Polo",
         "Jean",
-        "Short",
-        "Tenis",
-        "Sandalias"
+        "Short"
     ];
 
     productosOrdenados.sort((a, b) => {
@@ -439,10 +434,6 @@ if(categoria === "caballero"){
         "Jean",
         "Bermuda",
         "Pantaloneta",
-        "Tenis",
-        "Zapatos",
-        "Botas",
-        "Sandalias",
         "Boxer",
         "Medias"
     ];
@@ -475,9 +466,7 @@ if(categoria === "dama"){
         "Body",
         "Camisa Polo",
         "Jean",
-        "Short",
-        "Tenis",
-        "Sandalias"
+        "Short"
     ];
 
     productos = [...productos].sort((a, b) => {
