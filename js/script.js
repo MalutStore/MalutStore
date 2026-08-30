@@ -7,7 +7,7 @@
 const API_URL =
 "https://script.google.com/macros/s/AKfycbyfPSoT3p0hdp1xgXcjP3v9ygMlICKAWPcPVvrI503qEOTuapOavm3NZDO19T4YQ_Sv/exec";
 
-const numeroWhatsApp = "573108633055";
+const numeroWhatsApp = "573107799993";
 
 // =====================================
 // Configuración
