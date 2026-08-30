@@ -335,6 +335,25 @@ if(categoria === "zapatos"){
 
 }
 
+// Mostrar primero los productos destacados
+productosOrdenados.sort((a, b) => {
+
+    const destacadoA =
+        a.Destacado === true ||
+        (a.Destacado || "").toString().trim().toLowerCase() === "si";
+
+    const destacadoB =
+        b.Destacado === true ||
+        (b.Destacado || "").toString().trim().toLowerCase() === "si";
+
+    if(destacadoA && !destacadoB) return -1;
+
+    if(!destacadoA && destacadoB) return 1;
+
+    return 0;
+
+});
+
     // Obtener únicamente los productos que deben verse
     const productosMostrar =
         productosOrdenados.slice(0, productosVisibles[categoria]);
