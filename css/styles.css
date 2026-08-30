@@ -2566,6 +2566,32 @@ transition: all .2s ease;
 }
 
 /*=====================================
+    NO HAY PRODUCTOS
+======================================*/
+
+.sin-productos{
+    grid-column: 1 / -1;
+    width: 100%;
+    min-height: 180px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #f8f8f8;
+    border: 1px solid #e5e5e5;
+    border-radius: 14px;
+
+    color: #666;
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-align: center;
+
+    padding: 30px;
+}
+
+/*=====================================
     BOTÓN MENÚ MÓVIL
 ======================================*/
 

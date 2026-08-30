@@ -7,7 +7,7 @@
 const API_URL =
 "https://script.google.com/macros/s/AKfycbyfPSoT3p0hdp1xgXcjP3v9ygMlICKAWPcPVvrI503qEOTuapOavm3NZDO19T4YQ_Sv/exec";
 
-const numeroWhatsApp = "573107799993";
+const numeroWhatsApp = "573108633055";
 
 // =====================================
 // Configuración
@@ -1385,6 +1385,8 @@ function abrirWhatsApp(event, categoria, id){
         return;
 
     }
+    const urlImagen =
+    `https://malutstore.com/images/productos/${categoria}/${producto.ArchivoImagen}`;
 
     const tallaSeleccionada = tarjeta.querySelector(".talla-chip.seleccionada");
     const colorSeleccionado = tarjeta.querySelector(".color-chip.seleccionado");
@@ -1426,7 +1428,12 @@ Estoy interesado(a) en este producto de Malut Store.
 
     }
 
-    mensaje += `\n¿Podrían confirmarme la disponibilidad?`;
+    mensaje += `
+
+📷 Foto del producto:
+${urlImagen}
+
+¿Podrían confirmarme la disponibilidad?`;
 
     const url =
 `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensaje)}`;
@@ -2312,7 +2319,29 @@ if(filtrosActivos.Talla){
 productosFiltrados[categoria] = resultado;
 
 // Mostrar resultados
-mostrarProductos(resultado, categoria);
+if(resultado.length === 0){
+
+    const seccion = document.getElementById(categoria);
+    const contenedor = document.getElementById("productos-" + categoria);
+    const contenedorMostrarMas = document.getElementById("mostrar-mas-" + categoria);
+
+    seccion.style.display = "block";
+
+    contenedor.innerHTML = `
+        <div class="sin-productos">
+            NO HAY PRODUCTOS PARA MOSTRAR
+        </div>
+    `;
+
+    if(contenedorMostrarMas){
+        contenedorMostrarMas.innerHTML = "";
+    }
+
+}else{
+
+    mostrarProductos(resultado, categoria);
+
+}
 
 // Actualizar las tallas disponibles
 actualizarFiltroTallas(resultado, categoria);
