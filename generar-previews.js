@@ -45,8 +45,26 @@ function crearPreview(categoria, archivoImagen) {
 
 </head>
 
-<body>
-    <h1>Producto Malut Store</h1>
+<body style="
+    margin:0;
+    background:#111;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+">
+
+    <img
+        src="${urlImagen}"
+        alt="Producto Malut Store"
+        style="
+            max-width:100%;
+            max-height:100vh;
+            object-fit:contain;
+            display:block;
+        "
+    >
+
 </body>
 
 </html>`;
