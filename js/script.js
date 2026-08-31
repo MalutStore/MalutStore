@@ -318,8 +318,40 @@ if(categoria === "zapatos"){
         "Sandalias"
     ];
 
+    const ordenGeneroZapatos = [
+        "Hombre",
+        "Mujer"
+    ];
+
     productosOrdenados.sort((a, b) => {
 
+        // 1. Destacados primero
+        const destacadoA =
+            a.Destacado === true ||
+            (a.Destacado || "").toString().trim().toLowerCase() === "si";
+
+        const destacadoB =
+            b.Destacado === true ||
+            (b.Destacado || "").toString().trim().toLowerCase() === "si";
+
+        if(destacadoA && !destacadoB) return -1;
+        if(!destacadoA && destacadoB) return 1;
+
+        // 2. Hombre antes que Mujer
+        const generoA = (a.Genero || "").trim();
+        const generoB = (b.Genero || "").trim();
+
+        let indiceGeneroA = ordenGeneroZapatos.indexOf(generoA);
+        let indiceGeneroB = ordenGeneroZapatos.indexOf(generoB);
+
+        if(indiceGeneroA === -1) indiceGeneroA = ordenGeneroZapatos.length;
+        if(indiceGeneroB === -1) indiceGeneroB = ordenGeneroZapatos.length;
+
+        if(indiceGeneroA !== indiceGeneroB){
+            return indiceGeneroA - indiceGeneroB;
+        }
+
+        // 3. Orden por Tipo
         const tipoA = (a.Tipo || "").trim();
         const tipoB = (b.Tipo || "").trim();
 
@@ -577,7 +609,7 @@ if(categoria === "promociones"){
 
 }
 
-// Solo Zapatos: ordenar los productos por Tipo
+// Solo Zapatos: Destacados -> Hombre/Mujer -> Tipo
 if(categoria === "zapatos"){
 
     const ordenTiposZapatos = [
@@ -587,18 +619,74 @@ if(categoria === "zapatos"){
         "Sandalias"
     ];
 
-    productos.sort((a, b) => {
+    const ordenGeneroZapatos = [
+        "Hombre",
+        "Mujer"
+    ];
 
+    productos = [...productos].sort((a, b) => {
+
+        // 1. Destacados primero
+        const destacadoA =
+            a.Destacado === true ||
+            (a.Destacado || "").toString().trim().toLowerCase() === "si";
+
+        const destacadoB =
+            b.Destacado === true ||
+            (b.Destacado || "").toString().trim().toLowerCase() === "si";
+
+        if(destacadoA && !destacadoB) return -1;
+        if(!destacadoA && destacadoB) return 1;
+
+        // 2. Hombre antes que Mujer
+        const generoA = (a.Genero || "").trim();
+        const generoB = (b.Genero || "").trim();
+
+        let indiceGeneroA = ordenGeneroZapatos.indexOf(generoA);
+        let indiceGeneroB = ordenGeneroZapatos.indexOf(generoB);
+
+        if(indiceGeneroA === -1) indiceGeneroA = ordenGeneroZapatos.length;
+        if(indiceGeneroB === -1) indiceGeneroB = ordenGeneroZapatos.length;
+
+        if(indiceGeneroA !== indiceGeneroB){
+            return indiceGeneroA - indiceGeneroB;
+        }
+
+        // 3. Orden por Tipo
         const tipoA = (a.Tipo || "").trim();
         const tipoB = (b.Tipo || "").trim();
 
-        let indiceA = ordenTiposZapatos.indexOf(tipoA);
-        let indiceB = ordenTiposZapatos.indexOf(tipoB);
+        let indiceTipoA = ordenTiposZapatos.indexOf(tipoA);
+        let indiceTipoB = ordenTiposZapatos.indexOf(tipoB);
 
-        if(indiceA === -1) indiceA = ordenTiposZapatos.length;
-        if(indiceB === -1) indiceB = ordenTiposZapatos.length;
+        if(indiceTipoA === -1) indiceTipoA = ordenTiposZapatos.length;
+        if(indiceTipoB === -1) indiceTipoB = ordenTiposZapatos.length;
 
-        return indiceA - indiceB;
+        return indiceTipoA - indiceTipoB;
+
+    });
+
+}
+
+// Mostrar primero los productos destacados
+// En Zapatos ya se hace dentro de su orden especial
+if(categoria !== "zapatos"){
+
+    productos.sort((a, b) => {
+
+        const destacadoA =
+            a.Destacado === true ||
+            (a.Destacado || "").toString().trim().toLowerCase() === "si";
+
+        const destacadoB =
+            b.Destacado === true ||
+            (b.Destacado || "").toString().trim().toLowerCase() === "si";
+
+        if(destacadoA && !destacadoB) return -1;
+
+        if(!destacadoA && destacadoB) return 1;
+
+        return 0;
 
     });
 
@@ -3543,7 +3631,10 @@ function cambiarImagenColor(elemento, color){
     const extension = archivo.substring(archivo.lastIndexOf("."));
 
     // Convertir el color a formato de archivo
-const nombreColor = color.toLowerCase().trim();
+const nombreColor = color
+    .toLowerCase()
+    .trim()
+    .replace(/\s+/g, "-");
 
     const nuevaRuta =
 `images/productos/${categoria}/${nombreBase}-${nombreColor}${extension}`;
