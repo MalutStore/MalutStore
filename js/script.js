@@ -1492,11 +1492,22 @@ function abrirWhatsApp(event, categoria, id){
         return;
 
     }
-    const urlImagen =
-    `https://malutstore.com/images/productos/${categoria}/${producto.ArchivoImagen}`;
 
     const tallaSeleccionada = tarjeta.querySelector(".talla-chip.seleccionada");
     const colorSeleccionado = tarjeta.querySelector(".color-chip.seleccionado");
+
+    // Obtener la imagen que el cliente está viendo actualmente
+const imagenProducto = tarjeta.querySelector(".imagen-producto");
+
+// Obtener solamente el nombre del archivo
+const archivoActual = new URL(imagenProducto.src).pathname.split("/").pop();
+
+// Quitar la extensión de la imagen
+const nombrePreview = archivoActual.replace(/\.[^/.]+$/, "");
+
+// Crear la URL del preview para WhatsApp
+const urlPreview =
+    `https://malutstore.com/preview/${nombrePreview}.html`;
 
     let mensaje = `Hola 👋
 
@@ -1537,8 +1548,8 @@ Estoy interesado(a) en este producto de Malut Store.
 
     mensaje += `
 
-📷 Foto del producto:
-${urlImagen}
+📷 Producto:
+${urlPreview}
 
 ¿Podrían confirmarme la disponibilidad?`;
 
