@@ -3549,6 +3549,7 @@ max-height:85vh;
     display:flex;
     justify-content:center;
     align-items:center;
+    transform:translateY(-7vh);
 }
 
 .modal-historia-contenido img{
