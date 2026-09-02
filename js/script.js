@@ -1577,12 +1577,38 @@ ${urlPreview}
 ¿Podrían confirmarme la disponibilidad?`;
 
     const url =
-`https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensaje)}`;
+    `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensaje)}`;
 
-    window.open(url, "_blank");
+if(typeof gtag === "function"){
 
-    // Limpiar la tarjeta para dejarla como nueva
-    limpiarTarjeta(tarjeta);
+    const precioAnalytics =
+        producto.Oferta && producto.Oferta !== "N/A"
+            ? Number(producto.Precio) -
+              (Number(producto.Precio) * Number(producto.Oferta) / 100)
+            : Number(producto.Precio);
+
+    gtag("event", "whatsapp_product", {
+
+        currency: "COP",
+        value: precioAnalytics,
+
+        items: [{
+            item_id: producto.ID,
+            item_name: producto.Nombre,
+            item_brand: producto.Marca,
+            item_category: categoria,
+            price: precioAnalytics,
+            quantity: 1
+        }]
+
+    });
+
+}
+
+window.open(url, "_blank");
+
+// Limpiar la tarjeta para dejarla como nueva
+limpiarTarjeta(tarjeta);
 
 }
 
@@ -1800,6 +1826,26 @@ actualizarContadorCarrito();
 
 actualizarCarrito();
 
+if(typeof gtag === "function"){
+
+    gtag("event", "add_to_cart", {
+
+        currency: "COP",
+        value: precioFinal,
+
+        items: [{
+            item_id: producto.ID,
+            item_name: producto.Nombre,
+            item_brand: producto.Marca,
+            item_category: categoria,
+            price: precioFinal,
+            quantity: 1
+        }]
+
+    });
+
+}
+
 // Volver la tarjeta a su estado inicial
 limpiarTarjeta(tarjeta);
 
@@ -1875,6 +1921,37 @@ ${urlPreview}
 
     const url =
         `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensaje)}`;
+
+        if(typeof gtag === "function"){
+
+    const itemsAnalytics = carrito.map(item => ({
+        item_id: item.id,
+        item_name: item.nombre,
+        item_brand: item.marca,
+        item_category: item.categoria,
+        price: item.precio,
+        quantity: item.cantidad
+    }));
+
+    // El cliente inició el proceso de finalizar compra
+    gtag("event", "begin_checkout", {
+
+        currency: "COP",
+        value: total,
+        items: itemsAnalytics
+
+    });
+
+    // El pedido fue enviado hacia WhatsApp
+    gtag("event", "whatsapp_checkout", {
+
+        currency: "COP",
+        value: total,
+        items: itemsAnalytics
+
+    });
+
+}
 
     window.open(url, "_blank");
 }
@@ -1953,14 +2030,34 @@ document.getElementById("buscador").addEventListener("keydown", function(e){
 
     if(e.key === "Enter"){
 
-        buscarProductos();
+    const termino = document.getElementById("buscador").value.trim();
+
+    if(typeof gtag === "function" && termino){
+
+        gtag("event", "search", {
+            search_term: termino
+        });
 
     }
+
+    buscarProductos();
+
+}
 
 });
 
 // Buscar con la lupa
 document.getElementById("btnBuscar").addEventListener("click", function(){
+
+    const termino = document.getElementById("buscador").value.trim();
+
+    if(typeof gtag === "function" && termino){
+
+        gtag("event", "search", {
+            search_term: termino
+        });
+
+    }
 
     buscarProductos();
 
