@@ -389,6 +389,13 @@
 </li>
 
 </ul>
+
+<li class="menu-carrito">
+    <button id="btnCarrito" class="btn-carrito" aria-label="Abrir carrito">
+        <i class="fa-solid fa-cart-shopping"></i>
+        <span id="contadorCarrito">0</span>
+    </button>
+</li>
     </nav>
 
     <!-- =====================================
@@ -1060,9 +1067,58 @@ Google Maps
 </div>
 
 
-<script src="js/script.js"></script>
 
-</body>
+<!-- =========================
+     PANEL DEL CARRITO
+========================= -->
+
+<div id="overlayCarrito" class="overlay-carrito"></div>
+
+<aside id="panelCarrito" class="panel-carrito">
+
+    <div class="carrito-header">
+
+        <h2>Tu carrito</h2>
+
+        <button id="cerrarCarrito" class="cerrar-carrito">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+
+    </div>
+
+    <div id="contenidoCarrito" class="contenido-carrito">
+
+        <p class="carrito-vacio">
+            Tu carrito está vacío.
+        </p>
+
+    </div>
+
+    <div class="carrito-footer">
+
+    <div class="carrito-total">
+
+        <span>Total</span>
+
+        <strong id="totalCarrito">$0</strong>
+
+    </div>
+
+    <button
+    type="button"
+    id="finalizarCompra"
+    class="finalizar-compra">
+
+    <i class="fa-brands fa-whatsapp"></i>
+    Finalizar compra
+
+</button>
+
+</div>
+
+</aside>
+
+
 <!-- =====================================
      HISTORIA MALUT - BIENVENIDA
 ===================================== -->
@@ -1083,4 +1139,9 @@ Google Maps
     </div>
 
 </div>
+
+
+<script src="js/script.js"></script>
+
+</body>
 </html>

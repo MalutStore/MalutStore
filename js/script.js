@@ -23,6 +23,10 @@ const PRODUCTOS_POR_CARGA = 18;
 // Almacena todos los productos cargados
 const catalogo = {};
 
+// Productos agregados al carrito
+
+let carrito = [];
+
 // Cantidad de productos visibles por categoría
 let productosVisibles = {};
 
@@ -34,6 +38,22 @@ const filtrosActivos = {};
 
 // Productos filtrados por categoría
 const productosFiltrados = {};
+
+
+const EMOJI = {
+    saludo: "\u{1F44B}",
+    id: "\u{1F194}",
+    producto: "\u{1F6CD}",
+    marca: "\u{1F3F7}",
+    categoria: "\u{1F4C2}",
+    talla: "\u{1F4CF}",
+    color: "\u{1F3A8}",
+    precio: "\u{1F4B2}",
+    foto: "\u{1F4F7}",
+    cantidad: "\u{1F522}",
+    subtotal: "\u{1F4B0}",
+    total: "\u{1F4B3}"
+};
 
 // =====================================
 // CONFIGURACIÓN DE FILTROS POR CATEGORÍA
@@ -806,6 +826,15 @@ ${categoria === "perfumes" ? `
 
 ` : ""}
 
+<button
+    type="button"
+    class="boton-carrito-producto"
+    onclick="agregarAlCarrito(event,'${categoria}','${producto.ID}')">
+
+    <i class="fa-solid fa-cart-plus"></i> Agregar al carrito
+
+</button>
+
 <a
 href="#"
 class="boton-producto"
@@ -1509,46 +1538,40 @@ const nombrePreview = archivoActual.replace(/\.[^/.]+$/, "");
 const urlPreview =
     `https://malutstore.com/preview/${nombrePreview}.html`;
 
-    let mensaje = `Hola 👋
+   let mensaje = `Hola,
 
 Estoy interesado(a) en este producto de Malut Store.
 
-🆔 ID: ${producto.ID}
-🛍 Producto: ${producto.Nombre}
-🏷 Marca: ${producto.Marca}
-📂 Categoría: ${categoria.charAt(0).toUpperCase() + categoria.slice(1)}
+ID: ${producto.ID}
+Producto: ${producto.Nombre}
+Marca: ${producto.Marca}
+Categoría: ${categoria.charAt(0).toUpperCase() + categoria.slice(1)}
 `;
 
-    if(tallaSeleccionada){
+if(tallaSeleccionada){
+    mensaje += `Talla: ${tallaSeleccionada.dataset.talla}\n`;
+}
 
-        mensaje += `📏 Talla: ${tallaSeleccionada.dataset.talla}\n`;
+if(colorSeleccionado){
+    mensaje += `Color: ${colorSeleccionado.dataset.color}\n`;
+}
 
-    }
+if(producto.Oferta && producto.Oferta !== "N/A"){
 
-    if(colorSeleccionado){
+    const precioFinal =
+        Number(producto.Precio) -
+        (Number(producto.Precio) * Number(producto.Oferta) / 100);
 
-        mensaje += `🎨 Color: ${colorSeleccionado.dataset.color}\n`;
+    mensaje += `Precio: $${precioFinal.toLocaleString("es-CO")}\n`;
 
-    }
+}else{
 
-    // Precio
-    if(producto.Oferta && producto.Oferta !== "N/A"){
+    mensaje += `Precio: $${Number(producto.Precio).toLocaleString("es-CO")}\n`;
 
-        const precioFinal =
-            Number(producto.Precio) -
-            (Number(producto.Precio) * Number(producto.Oferta) / 100);
+}
 
-        mensaje += `💲 Precio: $${precioFinal.toLocaleString("es-CO")}\n`;
-
-    }else{
-
-        mensaje += `💲 Precio: $${Number(producto.Precio).toLocaleString("es-CO")}\n`;
-
-    }
-
-    mensaje += `
-
-📷 Producto:
+mensaje += `
+Producto:
 ${urlPreview}
 
 ¿Podrían confirmarme la disponibilidad?`;
@@ -1561,6 +1584,299 @@ ${urlPreview}
     // Limpiar la tarjeta para dejarla como nueva
     limpiarTarjeta(tarjeta);
 
+}
+
+// =====================================
+// Mostrar productos del carrito
+// =====================================
+
+function actualizarCarrito(){
+
+    const contenido = document.getElementById("contenidoCarrito");
+    const totalCarrito = document.getElementById("totalCarrito");
+
+    if(carrito.length === 0){
+
+        contenido.innerHTML = `
+            <p class="carrito-vacio">
+                Tu carrito está vacío.
+            </p>
+        `;
+totalCarrito.textContent = "$0";
+        return;
+    }
+
+    contenido.innerHTML = carrito.map((item, index) => `
+
+    <div class="item-carrito">
+
+        <img
+            src="${item.imagen}"
+            alt="${item.nombre}"
+            class="item-carrito-imagen">
+
+        <div class="item-carrito-info">
+
+            <strong>${item.nombre}</strong>
+
+            <span>${item.marca}</span>
+
+            ${item.talla ? `
+                <span>Talla: ${item.talla}</span>
+            ` : ""}
+
+            ${item.color ? `
+                <span>Color: ${item.color}</span>
+            ` : ""}
+
+            <span class="item-carrito-precio">
+                $${item.precio.toLocaleString("es-CO")}
+            </span>
+
+            <div class="control-cantidad">
+
+                <button
+                    type="button"
+                    onclick="disminuirCantidad(${index})">
+                    −
+                </button>
+
+                <span>${item.cantidad}</span>
+
+                <button
+                    type="button"
+                    onclick="aumentarCantidad(${index})">
+                    +
+                </button>
+
+            </div>
+
+        </div>
+
+        <button
+            type="button"
+            class="eliminar-item-carrito"
+            onclick="eliminarDelCarrito(${index})">
+
+            <i class="fa-solid fa-trash"></i>
+
+        </button>
+
+    </div>
+
+`).join("");
+const total = carrito.reduce(
+    (suma, item) => suma + (item.precio * item.cantidad),
+    0
+);
+
+totalCarrito.textContent =
+    `$${total.toLocaleString("es-CO")}`;
+}
+
+// =====================================
+// Controles de cantidad del carrito
+// =====================================
+
+function aumentarCantidad(index){
+
+    carrito[index].cantidad += 1;
+
+    actualizarContadorCarrito();
+    actualizarCarrito();
+    
+}
+
+
+function disminuirCantidad(index){
+
+    if(carrito[index].cantidad > 1){
+
+        carrito[index].cantidad -= 1;
+
+        actualizarContadorCarrito();
+        actualizarCarrito();
+    }
+}
+
+
+function eliminarDelCarrito(index){
+
+    carrito.splice(index, 1);
+
+    actualizarContadorCarrito();
+    actualizarCarrito();
+}
+
+
+// =====================================
+// Actualizar contador del carrito
+// =====================================
+
+function actualizarContadorCarrito(){
+
+    const cantidadTotal = carrito.reduce(
+        (total, item) => total + item.cantidad,
+        0
+    );
+
+    document.getElementById("contadorCarrito").textContent = cantidadTotal;
+}
+
+// =====================================
+// Agregar al carrito
+// =====================================
+
+function agregarAlCarrito(event, categoria, id){
+
+    event.preventDefault();
+
+    const boton = event.currentTarget;
+    const tarjeta = boton.closest(".producto-card");
+
+    if(boton.classList.contains("deshabilitado")){
+
+        tarjeta.dataset.validando = "true";
+        actualizarEstadoSeleccion(tarjeta);
+
+        return;
+    }
+
+    const producto = catalogo[categoria].find(p => p.ID === id);
+
+    if(!producto){
+
+        alert("No se encontró el producto.");
+        return;
+    }
+
+    const tallaSeleccionada =
+        tarjeta.querySelector(".talla-chip.seleccionada");
+
+    const colorSeleccionado =
+        tarjeta.querySelector(".color-chip.seleccionado");
+
+    const imagenProducto = tarjeta.querySelector(".imagen-producto");
+
+const precioFinal =
+    producto.Oferta && producto.Oferta !== "N/A"
+        ? Number(producto.Precio) -
+          (Number(producto.Precio) * Number(producto.Oferta) / 100)
+        : Number(producto.Precio);
+
+const itemCarrito = {
+
+    id: producto.ID,
+    categoria: categoria,
+    nombre: producto.Nombre,
+    marca: producto.Marca,
+
+    talla: tallaSeleccionada?.dataset.talla || null,
+    color: colorSeleccionado?.dataset.color || null,
+
+    precio: precioFinal,
+    imagen: imagenProducto.src,
+
+    cantidad: 1
+};
+
+const productoExistente = carrito.find(item =>
+    item.id === itemCarrito.id &&
+    item.talla === itemCarrito.talla &&
+    item.color === itemCarrito.color
+);
+
+if(productoExistente){
+
+    productoExistente.cantidad += 1;
+
+}else{
+
+    carrito.push(itemCarrito);
+
+}
+
+actualizarContadorCarrito();
+
+actualizarCarrito();
+
+// Volver la tarjeta a su estado inicial
+limpiarTarjeta(tarjeta);
+
+
+
+}
+
+// =====================================
+// Finalizar compra por WhatsApp
+// =====================================
+
+function finalizarCompraWhatsApp(){
+
+    if(carrito.length === 0){
+
+        alert("Tu carrito está vacío.");
+        return;
+    }
+
+    let mensaje = `Hola,
+
+Quiero realizar este pedido en Malut Store:
+
+`;
+
+    carrito.forEach((item, index) => {
+
+        // Obtener el nombre del archivo de la imagen seleccionada
+        const archivoActual =
+            new URL(item.imagen).pathname.split("/").pop();
+
+        // Quitar extensión
+        const nombrePreview =
+            archivoActual.replace(/\.[^/.]+$/, "");
+
+        // Crear enlace del preview
+        const urlPreview =
+            `https://malutstore.com/preview/${nombrePreview}.html`;
+
+        mensaje += `*PRODUCTO ${index + 1}* 
+${item.nombre}
+Marca: ${item.marca}
+`;
+
+        if(item.talla){
+            mensaje += `Talla: ${item.talla}\n`;
+        }
+
+        if(item.color){
+            mensaje += `Color: ${item.color}\n`;
+        }
+
+        mensaje += `Cantidad: ${item.cantidad}
+Precio unitario: $${item.precio.toLocaleString("es-CO")}
+Subtotal: $${(item.precio * item.cantidad).toLocaleString("es-CO")}
+
+Producto:
+${urlPreview}
+
+------------------------------
+
+`;
+    });
+
+    const total = carrito.reduce(
+        (suma, item) => suma + (item.precio * item.cantidad),
+        0
+    );
+
+    mensaje += `*TOTAL: $${total.toLocaleString("es-CO")}*
+
+¿Podrían confirmarme disponibilidad y forma de pago?`;
+
+    const url =
+        `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensaje)}`;
+
+    window.open(url, "_blank");
 }
 // =====================================
 // FILTRO DE CATEGORÍAS
@@ -3678,9 +3994,9 @@ const nombreColor = color
 
 function actualizarBotonCompra(tarjeta){
 
-    const boton = tarjeta.querySelector(".boton-producto");
+    const botones = tarjeta.querySelectorAll(".boton-producto, .boton-carrito-producto");
 
-    if(!boton) return;
+if(!botones.length) return;
 
     const tieneTallas = tarjeta.querySelectorAll(".talla-chip").length > 0;
     const tieneColores = tarjeta.querySelectorAll(".color-chip").length > 0;
@@ -3702,6 +4018,8 @@ function actualizarBotonCompra(tarjeta){
 
     }
 
+    botones.forEach(boton => {
+
     if(habilitado){
 
         boton.classList.remove("deshabilitado");
@@ -3711,6 +4029,8 @@ function actualizarBotonCompra(tarjeta){
         boton.classList.add("deshabilitado");
 
     }
+
+});
 
 }
 
@@ -3844,3 +4164,38 @@ document.addEventListener("DOMContentLoaded", function(){
     });
 
 });
+
+// =====================================
+// Abrir y cerrar carrito
+// =====================================
+
+const btnCarrito = document.getElementById("btnCarrito");
+const panelCarrito = document.getElementById("panelCarrito");
+const overlayCarrito = document.getElementById("overlayCarrito");
+const cerrarCarrito = document.getElementById("cerrarCarrito");
+const finalizarCompra = document.getElementById("finalizarCompra");
+
+
+function abrirPanelCarrito(){
+
+    panelCarrito.classList.add("activo");
+    overlayCarrito.classList.add("activo");
+
+}
+
+function cerrarPanelCarrito(){
+
+    panelCarrito.classList.remove("activo");
+    overlayCarrito.classList.remove("activo");
+
+}
+
+btnCarrito.addEventListener("click", abrirPanelCarrito);
+
+cerrarCarrito.addEventListener("click", cerrarPanelCarrito);
+
+overlayCarrito.addEventListener("click", cerrarPanelCarrito);
+finalizarCompra.addEventListener(
+    "click",
+    finalizarCompraWhatsApp
+);

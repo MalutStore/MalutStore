@@ -3468,6 +3468,55 @@ max-height:85vh;
     z-index:10000;
 
 }
+
+/*=====================================
+  CARRITO - VERSIÓN MÓVIL
+=====================================*/
+
+.panel-carrito{
+
+    width:100%;
+    max-width:430px;
+    right:-100%;
+
+}
+
+.panel-carrito.abierto{
+
+    right:0;
+
+}
+
+.overlay-carrito{
+
+    backdrop-filter:blur(2px);
+
+}
+
+.carrito-header{
+
+    padding:18px;
+
+}
+
+.contenido-carrito{
+
+    padding:15px;
+
+}
+
+.carrito-footer{
+
+    padding:18px 15px calc(18px + env(safe-area-inset-bottom));
+
+}
+
+.finalizar-compra{
+
+    width:100%;
+    justify-content:center;
+
+}
 /* =====================================
    MODAL HISTORIA MALUT
 ===================================== */
@@ -3542,3 +3591,379 @@ max-height:85vh;
 
     z-index:2;
 }
+
+/* =========================
+   CARRITO - HEADER
+========================= */
+
+.menu-carrito {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-carrito {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: transparent;
+    border: none;
+    color: #d9ad2b;
+
+    font-size: 21px;
+    cursor: pointer;
+
+    padding: 8px 10px;
+}
+
+.btn-carrito:hover {
+    color: #f0c84b;
+}
+
+#contadorCarrito {
+    position: absolute;
+    top: -2px;
+    right: -3px;
+
+    min-width: 17px;
+    height: 17px;
+    padding: 0 4px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #d9ad2b;
+    color: #111;
+
+    border-radius: 50%;
+    font-size: 10px;
+    font-weight: 700;
+    line-height: 1;
+}
+
+/* =========================
+   BOTÓN AGREGAR AL CARRITO
+========================= */
+
+.boton-carrito-producto {
+    width: calc(100% - 24px);
+    margin: 5px 12px 3px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+
+    padding: 5px 4px;
+
+    background: transparent;
+    border: 1px solid #d9ad2b;
+    border-radius: 16px;
+
+    color: #111;
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 600;
+    white-space: nowrap;
+
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.boton-carrito-producto:hover {
+    background: #d9ad2b;
+    color: #111;
+}
+
+.boton-carrito-producto.deshabilitado {
+    opacity: 0.45;
+    cursor: pointer;
+}
+
+/* =========================
+   PANEL DEL CARRITO
+========================= */
+
+.overlay-carrito {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+
+    opacity: 0;
+    visibility: hidden;
+
+    transition: 0.25s ease;
+    z-index: 99998;
+}
+
+.overlay-carrito.activo {
+    opacity: 1;
+    visibility: visible;
+}
+
+.panel-carrito {
+    position: fixed;
+    top: 0;
+    right: 0;
+
+    width: 380px;
+    max-width: 90%;
+    height: 100vh;
+
+    background: #fff;
+
+    transform: translateX(100%);
+    transition: 0.3s ease;
+
+     z-index: 99999;
+
+    box-shadow: -8px 0 25px rgba(0, 0, 0, 0.18);
+
+    display: flex;
+    flex-direction: column;
+}
+
+.panel-carrito.activo {
+    transform: translateX(0);
+}
+
+.carrito-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 20px;
+
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.carrito-header h2 {
+    margin: 0;
+
+    font-size: 22px;
+    color: #111;
+}
+
+.cerrar-carrito {
+    background: transparent;
+    border: none;
+
+    font-size: 22px;
+    cursor: pointer;
+
+    color: #111;
+}
+
+.contenido-carrito {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.carrito-vacio {
+    text-align: center;
+    color: #777;
+    margin-top: 40px;
+}
+
+/* =========================
+   PRODUCTOS DEL CARRITO
+========================= */
+
+.item-carrito {
+    display: flex;
+    gap: 12px;
+
+    padding: 12px 0;
+
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.item-carrito-imagen {
+    width: 90px;
+    height: 110px;
+
+    object-fit: cover;
+
+    border-radius: 10px;
+
+    flex-shrink: 0;
+}
+
+.item-carrito-info {
+    display: flex;
+    flex-direction: column;
+
+    gap: 4px;
+
+    flex: 1;
+
+    font-size: 13px;
+    color: #333;
+}
+
+.item-carrito-info strong {
+    font-size: 15px;
+    color: #111;
+}
+
+.item-carrito-info span {
+    display: block;
+}
+
+.item-carrito-precio {
+    margin-top: 4px;
+
+    font-size: 15px;
+    font-weight: 700;
+
+    color: #d9ad2b;
+}
+
+/* =========================
+   CONTROLES DEL CARRITO
+========================= */
+
+.item-carrito {
+    position: relative;
+    padding-right: 35px;
+}
+
+/* Papelera */
+
+.eliminar-item-carrito {
+    position: absolute;
+    top: 12px;
+    right: 0;
+
+    width: 30px;
+    height: 30px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: transparent;
+    border: none;
+
+    color: #777;
+    font-size: 15px;
+
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.eliminar-item-carrito:hover {
+    color: #c62828;
+}
+
+/* Control de cantidad */
+
+.control-cantidad {
+    display: inline-flex;
+    align-items: center;
+
+    width: fit-content;
+    height: 30px;
+
+    margin: 8px auto 0;
+
+    border: 1px solid #d9ad2b;
+    border-radius: 15px;
+
+    overflow: hidden;
+}
+
+.control-cantidad button {
+    width: 30px;
+    height: 30px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: transparent;
+    border: none;
+
+    color: #111;
+    font-size: 17px;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+.control-cantidad button:hover {
+    background: #f5f5f5;
+}
+
+.control-cantidad span {
+    min-width: 32px;
+
+    text-align: center;
+
+    font-size: 13px;
+    font-weight: 600;
+    color: #111;
+}
+
+/* =========================
+   TOTAL DEL CARRITO
+========================= */
+
+.carrito-footer {
+    padding: 16px 20px;
+    border-top: 1px solid #e5e5e5;
+    background: #fff;
+}
+
+.carrito-total {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.carrito-total span {
+    font-size: 16px;
+    font-weight: 600;
+    color: #111;
+}
+
+.carrito-total strong {
+    font-size: 20px;
+    color: #d9ad2b;
+}
+
+/* =========================
+   FINALIZAR COMPRA
+========================= */
+
+.finalizar-compra {
+    width: 100%;
+    margin-top: 14px;
+    padding: 12px 16px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    background: #25d366;
+    border: none;
+    border-radius: 22px;
+
+    color: #fff;
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 700;
+
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.finalizar-compra:hover {
+    background: #1ebe5d;
+}
+
