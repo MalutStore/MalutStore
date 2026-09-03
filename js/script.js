@@ -1620,6 +1620,7 @@ function actualizarCarrito(){
 
     const contenido = document.getElementById("contenidoCarrito");
     const totalCarrito = document.getElementById("totalCarrito");
+    const ahorroCarrito = document.getElementById("ahorroCarrito");
 
     if(carrito.length === 0){
 
@@ -1629,6 +1630,8 @@ function actualizarCarrito(){
             </p>
         `;
 totalCarrito.textContent = "$0";
+ahorroCarrito.style.display = "none";
+ahorroCarrito.textContent = "";
         return;
     }
 
@@ -1655,9 +1658,27 @@ totalCarrito.textContent = "$0";
                 <span>Color: ${item.color}</span>
             ` : ""}
 
-            <span class="item-carrito-precio">
-                $${item.precio.toLocaleString("es-CO")}
-            </span>
+            ${item.oferta > 0 ? `
+
+    <span class="item-carrito-precio-original">
+        $${item.precioOriginal.toLocaleString("es-CO")}
+    </span>
+
+    <span class="item-carrito-precio">
+        $${item.precio.toLocaleString("es-CO")}
+    </span>
+
+    <span class="item-carrito-ahorro">
+        Ahorras $${((item.precioOriginal - item.precio) * item.cantidad).toLocaleString("es-CO")}
+    </span>
+
+` : `
+
+    <span class="item-carrito-precio">
+        $${item.precio.toLocaleString("es-CO")}
+    </span>
+
+`}
 
             <div class="control-cantidad">
 
@@ -1696,6 +1717,29 @@ const total = carrito.reduce(
     0
 );
 
+const ahorroTotal = carrito.reduce(
+    (suma, item) => {
+
+        const ahorroUnitario =
+            (item.precioOriginal || item.precio) - item.precio;
+
+        return suma + (ahorroUnitario * item.cantidad);
+    },
+    0
+);
+
+if(ahorroTotal > 0){
+
+    ahorroCarrito.style.display = "block";
+    ahorroCarrito.textContent =
+        `Ahorraste $${ahorroTotal.toLocaleString("es-CO")} en esta compra`;
+
+}else{
+
+    ahorroCarrito.style.display = "none";
+    ahorroCarrito.textContent = "";
+
+}
 totalCarrito.textContent =
     `$${total.toLocaleString("es-CO")}`;
 }
@@ -1800,7 +1844,12 @@ const itemCarrito = {
     talla: tallaSeleccionada?.dataset.talla || null,
     color: colorSeleccionado?.dataset.color || null,
 
+    precioOriginal: Number(producto.Precio),
     precio: precioFinal,
+    oferta: producto.Oferta && producto.Oferta !== "N/A"
+        ? Number(producto.Oferta)
+        : 0,
+
     imagen: imagenProducto.src,
 
     cantidad: 1
@@ -1827,6 +1876,7 @@ actualizarContadorCarrito();
 actualizarCarrito();
 
 if(typeof gtag === "function"){
+
 
     gtag("event", "add_to_cart", {
 
@@ -1899,10 +1949,41 @@ Marca: ${item.marca}
         }
 
         mensaje += `Cantidad: ${item.cantidad}
-Precio unitario: $${item.precio.toLocaleString("es-CO")}
+
+`;
+
+if(item.oferta > 0){
+
+    const ahorroUnitario =
+        item.precioOriginal - item.precio;
+
+    const ahorroProducto =
+        ahorroUnitario * item.cantidad;
+
+    mensaje += `Precio original: $${item.precioOriginal.toLocaleString("es-CO")}
+
+Descuento: ${item.oferta}%
+
+Precio con descuento: $${item.precio.toLocaleString("es-CO")}
+
+Ahorro: $${ahorroProducto.toLocaleString("es-CO")}
+
 Subtotal: $${(item.precio * item.cantidad).toLocaleString("es-CO")}
 
-Producto:
+`;
+
+}else{
+
+    mensaje += `Precio unitario: $${item.precio.toLocaleString("es-CO")}
+
+Subtotal: $${(item.precio * item.cantidad).toLocaleString("es-CO")}
+
+`;
+
+}
+
+mensaje += `Producto:
+
 ${urlPreview}
 
 ------------------------------
@@ -1915,7 +1996,26 @@ ${urlPreview}
         0
     );
 
-    mensaje += `*TOTAL: $${total.toLocaleString("es-CO")}*
+    const ahorroTotal = carrito.reduce(
+    (suma, item) => {
+
+        const ahorroUnitario =
+            (item.precioOriginal || item.precio) - item.precio;
+
+        return suma + (ahorroUnitario * item.cantidad);
+    },
+    0
+);
+
+    if(ahorroTotal > 0){
+
+    mensaje += `*AHORRO TOTAL: $${ahorroTotal.toLocaleString("es-CO")}*
+
+`;
+
+}
+
+mensaje += `*TOTAL: $${total.toLocaleString("es-CO")}*
 
 ¿Podrían confirmarme disponibilidad y forma de pago?`;
 

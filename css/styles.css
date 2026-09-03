@@ -3937,6 +3937,34 @@ max-height:85vh;
     color: #d9ad2b;
 }
 
+/* Precio original cuando hay descuento */
+.item-carrito-precio-original{
+    font-size:13px;
+    color:#999;
+    text-decoration:line-through;
+}
+
+/* Precio final */
+.item-carrito-precio{
+    font-size:16px;
+    font-weight:700;
+}
+
+/* Ahorro */
+.item-carrito-ahorro{
+    font-size:12px;
+    font-weight:600;
+    color:#1f8f4e;
+}
+
+.carrito-ahorro-total{
+    margin-bottom:10px;
+    font-size:14px;
+    font-weight:600;
+    color:#1f8f4e;
+    text-align:right;
+}
+
 /* =========================
    FINALIZAR COMPRA
 ========================= */
