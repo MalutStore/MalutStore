@@ -9,15 +9,33 @@
   </url>
 
   <url>
+    <loc>https://malutstore.com/dama/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://malutstore.com/caballero/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
     <loc>https://malutstore.com/zapatos/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
-<url>
-  <loc>https://malutstore.com/perfumes/</loc>
-  <changefreq>weekly</changefreq>
-  <priority>0.8</priority>
-</url>
+  <url>
+    <loc>https://malutstore.com/perfumes/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://malutstore.com/accesorios/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
 
 </urlset>
