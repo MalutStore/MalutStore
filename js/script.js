@@ -20,6 +20,51 @@ const PRODUCTOS_POR_CARGA = 18;
 // Variables globales
 // =====================================
 
+// Control de compra pendiente
+let tipoCompraPendiente = "";
+let compraProductoPendiente = null;
+
+// =====================================
+// MODAL DATOS DEL PEDIDO
+// PRUEBA DE APERTURA Y CIERRE
+// =====================================
+
+const modalDatosPedido =
+    document.getElementById("modalDatosPedido");
+
+const cerrarDatosPedido =
+    document.getElementById("cerrarDatosPedido");
+
+function abrirModalDatosPedido(){
+
+    modalDatosPedido.classList.add("activo");
+
+}
+
+function cerrarModalDatosPedido(){
+
+    modalDatosPedido.classList.remove("activo");
+
+}
+
+cerrarDatosPedido.addEventListener(
+    "click",
+    cerrarModalDatosPedido
+);
+
+modalDatosPedido.addEventListener(
+    "click",
+    function(event){
+
+        if(event.target === modalDatosPedido){
+
+            cerrarModalDatosPedido();
+
+        }
+
+    }
+);
+
 // Almacena todos los productos cargados
 const catalogo = {};
 
@@ -54,6 +99,8 @@ const EMOJI = {
     subtotal: "\u{1F4B0}",
     total: "\u{1F4B3}"
 };
+
+
 
 // =====================================
 // CONFIGURACIÓN DE FILTROS POR CATEGORÍA
@@ -1576,39 +1623,551 @@ ${urlPreview}
 
 ¿Podrían confirmarme la disponibilidad?`;
 
-    const url =
-    `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensaje)}`;
+    // =====================================
+// GUARDAR COMPRA DIRECTA PENDIENTE
+// =====================================
 
-if(typeof gtag === "function"){
+compraProductoPendiente = {
+    producto: producto,
+    categoria: categoria,
+    talla: tallaSeleccionada
+        ? tallaSeleccionada.dataset.talla
+        : "",
+    color: colorSeleccionado
+        ? colorSeleccionado.dataset.color
+        : "",
+    imagen: imagenProducto.src,
+    urlPreview: urlPreview,
+    tarjeta: tarjeta
+};
 
-    const precioAnalytics =
+tipoCompraPendiente = "producto";
+
+
+// Abrir formulario de datos
+abrirModalDatosPedido();
+}
+
+
+// =====================================
+// OBTENER DATOS DEL CLIENTE
+// =====================================
+
+function obtenerDatosCliente(){
+
+    const datos = {
+
+        nombre:
+            document.getElementById("nombrePedido").value.trim(),
+
+        celular:
+            document.getElementById("celularPedido").value.trim(),
+
+        tipoEntrega:
+            tipoEntregaSeleccionado,
+
+        cedula: "",
+        ciudad: "",
+        direccion: "",
+        barrio: "",
+        indicaciones: ""
+
+    };
+
+
+    // Recoger en tienda
+    if(tipoEntregaSeleccionado === "tienda"){
+
+        datos.entregaTexto = "Recoger en tienda";
+
+    }
+
+
+    // Domicilio en Cúcuta
+    if(tipoEntregaSeleccionado === "cucuta"){
+
+        datos.entregaTexto = "Domicilio en Cúcuta";
+
+        datos.ciudad = "Cúcuta";
+
+        datos.direccion =
+            document.getElementById("direccionCucuta").value.trim();
+
+        datos.barrio =
+            document.getElementById("barrioCucuta").value.trim();
+
+        datos.indicaciones =
+            document.getElementById("indicacionesCucuta").value.trim();
+
+    }
+
+
+    // Envío a otra ciudad
+    if(tipoEntregaSeleccionado === "nacional"){
+
+        datos.entregaTexto = "Envío a otra ciudad";
+
+        datos.cedula =
+            document.getElementById("cedulaPedido").value.trim();
+
+        datos.ciudad =
+            document.getElementById("ciudadPedido").value.trim();
+
+        datos.direccion =
+            document.getElementById("direccionNacional").value.trim();
+
+        datos.barrio =
+            document.getElementById("barrioNacional").value.trim();
+
+        datos.indicaciones =
+            document.getElementById("indicacionesNacional").value.trim();
+
+    }
+
+
+    return datos;
+
+}
+
+// =====================================
+// ENVIAR COMPRA DIRECTA POR WHATSAPP
+// =====================================
+
+function enviarCompraProductoWhatsApp(datosCliente){
+
+    if(!compraProductoPendiente){
+        return;
+    }
+
+    const {
+        producto,
+        categoria,
+        talla,
+        color,
+        urlPreview,
+        tarjeta
+    } = compraProductoPendiente;
+
+
+    // Calcular precio final
+    const precioFinal =
         producto.Oferta && producto.Oferta !== "N/A"
             ? Number(producto.Precio) -
               (Number(producto.Precio) * Number(producto.Oferta) / 100)
             : Number(producto.Precio);
 
-    gtag("event", "whatsapp_product", {
 
-        currency: "COP",
-        value: precioAnalytics,
+    // =====================================
+    // DATOS DEL CLIENTE
+    // =====================================
 
-        items: [{
-            item_id: producto.ID,
-            item_name: producto.Nombre,
-            item_brand: producto.Marca,
-            item_category: categoria,
-            price: precioAnalytics,
-            quantity: 1
-        }]
+    let mensaje = `Hola,
 
-    });
+Quiero realizar este pedido en Malut Store.
+
+*DATOS DEL CLIENTE*
+
+Nombre: ${datosCliente.nombre}
+Celular: ${datosCliente.celular}
+Entrega: ${datosCliente.entregaTexto}
+`;
+
+
+    // Envío nacional
+    if(datosCliente.cedula){
+
+        mensaje += `Cédula: ${datosCliente.cedula}
+`;
+
+    }
+
+
+    // Ciudad
+    if(datosCliente.ciudad){
+
+        mensaje += `Ciudad: ${datosCliente.ciudad}
+`;
+
+    }
+
+
+    // Dirección
+    if(datosCliente.direccion){
+
+        mensaje += `Dirección: ${datosCliente.direccion}
+`;
+
+    }
+
+
+    // Barrio
+    if(datosCliente.barrio){
+
+        mensaje += `Barrio / sector: ${datosCliente.barrio}
+`;
+
+    }
+
+
+    // Indicaciones opcionales
+    if(datosCliente.indicaciones){
+
+        mensaje += `Indicaciones: ${datosCliente.indicaciones}
+`;
+
+    }
+
+
+    // =====================================
+    // DATOS DEL PRODUCTO
+    // =====================================
+
+    mensaje += `
+------------------------------
+
+*PRODUCTO 1*
+
+${producto.Nombre}
+
+Marca: ${producto.Marca}
+Categoría: ${categoria.charAt(0).toUpperCase() + categoria.slice(1)}
+`;
+
+
+    if(talla){
+
+        mensaje += `Talla: ${talla}
+`;
+
+    }
+
+
+    if(color){
+
+        mensaje += `Color: ${color}
+`;
+
+    }
+
+
+    // Producto con oferta
+    if(producto.Oferta && producto.Oferta !== "N/A"){
+
+        mensaje += `Precio original: $${Number(producto.Precio).toLocaleString("es-CO")}
+Descuento: ${producto.Oferta}%
+Precio con descuento: $${precioFinal.toLocaleString("es-CO")}
+`;
+
+    }else{
+
+        mensaje += `Precio: $${precioFinal.toLocaleString("es-CO")}
+`;
+
+    }
+
+
+    mensaje += `
+Producto:
+
+${urlPreview}
+
+------------------------------
+
+¿Podrían confirmarme disponibilidad y forma de pago?`;
+
+
+    // =====================================
+    // ANALYTICS
+    // =====================================
+
+    if(typeof gtag === "function"){
+
+        gtag("event", "whatsapp_product", {
+
+            currency: "COP",
+
+            value: precioFinal,
+
+            items: [{
+
+                item_id: producto.ID,
+                item_name: producto.Nombre,
+                item_brand: producto.Marca,
+                item_category: categoria,
+                price: precioFinal,
+                quantity: 1
+
+            }]
+
+        });
+
+    }
+
+
+    // =====================================
+    // ABRIR WHATSAPP
+    // =====================================
+
+    const url =
+        `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensaje)}`;
+
+    window.open(url, "_blank");
+
+
+    // Limpiar tarjeta después de continuar
+    limpiarTarjeta(tarjeta);
 
 }
 
-window.open(url, "_blank");
+// =====================================
+// ENVIAR CARRITO POR WHATSAPP
+// =====================================
 
-// Limpiar la tarjeta para dejarla como nueva
-limpiarTarjeta(tarjeta);
+function enviarCarritoWhatsApp(datosCliente){
+
+    if(carrito.length === 0){
+        return;
+    }
+
+
+    // =====================================
+    // DATOS DEL CLIENTE
+    // =====================================
+
+    let mensaje = `Hola,
+
+Quiero realizar este pedido en Malut Store.
+
+*DATOS DEL CLIENTE*
+
+Nombre: ${datosCliente.nombre}
+Celular: ${datosCliente.celular}
+Entrega: ${datosCliente.entregaTexto}
+`;
+
+
+    if(datosCliente.cedula){
+
+        mensaje += `Cédula: ${datosCliente.cedula}
+`;
+
+    }
+
+
+    if(datosCliente.ciudad){
+
+        mensaje += `Ciudad: ${datosCliente.ciudad}
+`;
+
+    }
+
+
+    if(datosCliente.direccion){
+
+        mensaje += `Dirección: ${datosCliente.direccion}
+`;
+
+    }
+
+
+    if(datosCliente.barrio){
+
+        mensaje += `Barrio / sector: ${datosCliente.barrio}
+`;
+
+    }
+
+
+    if(datosCliente.indicaciones){
+
+        mensaje += `Indicaciones: ${datosCliente.indicaciones}
+`;
+
+    }
+
+
+    mensaje += `
+------------------------------
+
+`;
+
+
+    // =====================================
+    // PRODUCTOS DEL CARRITO
+    // =====================================
+
+    carrito.forEach((item, index) => {
+
+        const archivoActual =
+            new URL(item.imagen).pathname.split("/").pop();
+
+        const nombrePreview =
+            archivoActual.replace(/\.[^/.]+$/, "");
+
+        const urlPreview =
+            `https://malutstore.com/preview/${nombrePreview}.html`;
+
+
+        mensaje += `*PRODUCTO ${index + 1}*
+
+${item.nombre}
+
+Marca: ${item.marca}
+`;
+
+
+        if(item.talla){
+
+            mensaje += `Talla: ${item.talla}
+`;
+
+        }
+
+
+        if(item.color){
+
+            mensaje += `Color: ${item.color}
+`;
+
+        }
+
+
+        mensaje += `Cantidad: ${item.cantidad}
+`;
+
+
+        // Producto con oferta
+
+        if(item.oferta > 0){
+
+            const ahorroUnitario =
+                item.precioOriginal - item.precio;
+
+            const ahorroProducto =
+                ahorroUnitario * item.cantidad;
+
+
+            mensaje += `Precio original: $${item.precioOriginal.toLocaleString("es-CO")}
+Descuento: ${item.oferta}%
+Precio con descuento: $${item.precio.toLocaleString("es-CO")}
+Ahorro: $${ahorroProducto.toLocaleString("es-CO")}
+Subtotal: $${(item.precio * item.cantidad).toLocaleString("es-CO")}
+`;
+
+        }else{
+
+            mensaje += `Precio unitario: $${item.precio.toLocaleString("es-CO")}
+Subtotal: $${(item.precio * item.cantidad).toLocaleString("es-CO")}
+`;
+
+        }
+
+
+        mensaje += `
+Producto:
+
+${urlPreview}
+
+------------------------------
+
+`;
+
+    });
+
+
+    // =====================================
+    // TOTAL
+    // =====================================
+
+    const total = carrito.reduce(
+
+        (suma, item) =>
+            suma + (item.precio * item.cantidad),
+
+        0
+
+    );
+
+
+    const ahorroTotal = carrito.reduce(
+
+        (suma, item) => {
+
+            const ahorroUnitario =
+                (item.precioOriginal || item.precio) -
+                item.precio;
+
+            return suma +
+                (ahorroUnitario * item.cantidad);
+
+        },
+
+        0
+
+    );
+
+
+    if(ahorroTotal > 0){
+
+        mensaje += `*AHORRO TOTAL: $${ahorroTotal.toLocaleString("es-CO")}*
+
+`;
+
+    }
+
+
+    mensaje += `*TOTAL: $${total.toLocaleString("es-CO")}*
+
+¿Podrían confirmarme disponibilidad y forma de pago?`;
+
+
+    // =====================================
+    // ANALYTICS
+    // =====================================
+
+    if(typeof gtag === "function"){
+
+        const itemsAnalytics =
+            carrito.map(item => ({
+
+                item_id: item.id,
+                item_name: item.nombre,
+                item_brand: item.marca,
+                item_category: item.categoria,
+                price: item.precio,
+                quantity: item.cantidad
+
+            }));
+
+
+        gtag("event", "begin_checkout", {
+
+            currency: "COP",
+            value: total,
+            items: itemsAnalytics
+
+        });
+
+
+        gtag("event", "whatsapp_checkout", {
+
+            currency: "COP",
+            value: total,
+            items: itemsAnalytics
+
+        });
+
+    }
+
+
+    // =====================================
+    // ABRIR WHATSAPP
+    // =====================================
+
+    const url =
+        `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensaje)}`;
+
+    window.open(url, "_blank");
 
 }
 
@@ -1904,7 +2463,7 @@ limpiarTarjeta(tarjeta);
 }
 
 // =====================================
-// Finalizar compra por WhatsApp
+// FINALIZAR COMPRA DESDE EL CARRITO
 // =====================================
 
 function finalizarCompraWhatsApp(){
@@ -1912,149 +2471,23 @@ function finalizarCompraWhatsApp(){
     if(carrito.length === 0){
 
         alert("Tu carrito está vacío.");
+
         return;
+
     }
 
-    let mensaje = `Hola,
+    // Guardar que la compra pendiente
+    // corresponde al carrito
 
-Quiero realizar este pedido en Malut Store:
+    tipoCompraPendiente = "carrito";
 
-`;
+    // Abrir formulario de datos
 
-    carrito.forEach((item, index) => {
-
-        // Obtener el nombre del archivo de la imagen seleccionada
-        const archivoActual =
-            new URL(item.imagen).pathname.split("/").pop();
-
-        // Quitar extensión
-        const nombrePreview =
-            archivoActual.replace(/\.[^/.]+$/, "");
-
-        // Crear enlace del preview
-        const urlPreview =
-            `https://malutstore.com/preview/${nombrePreview}.html`;
-
-        mensaje += `*PRODUCTO ${index + 1}* 
-${item.nombre}
-Marca: ${item.marca}
-`;
-
-        if(item.talla){
-            mensaje += `Talla: ${item.talla}\n`;
-        }
-
-        if(item.color){
-            mensaje += `Color: ${item.color}\n`;
-        }
-
-        mensaje += `Cantidad: ${item.cantidad}
-
-`;
-
-if(item.oferta > 0){
-
-    const ahorroUnitario =
-        item.precioOriginal - item.precio;
-
-    const ahorroProducto =
-        ahorroUnitario * item.cantidad;
-
-    mensaje += `Precio original: $${item.precioOriginal.toLocaleString("es-CO")}
-
-Descuento: ${item.oferta}%
-
-Precio con descuento: $${item.precio.toLocaleString("es-CO")}
-
-Ahorro: $${ahorroProducto.toLocaleString("es-CO")}
-
-Subtotal: $${(item.precio * item.cantidad).toLocaleString("es-CO")}
-
-`;
-
-}else{
-
-    mensaje += `Precio unitario: $${item.precio.toLocaleString("es-CO")}
-
-Subtotal: $${(item.precio * item.cantidad).toLocaleString("es-CO")}
-
-`;
+    abrirModalDatosPedido();
 
 }
 
-mensaje += `Producto:
 
-${urlPreview}
-
-------------------------------
-
-`;
-    });
-
-    const total = carrito.reduce(
-        (suma, item) => suma + (item.precio * item.cantidad),
-        0
-    );
-
-    const ahorroTotal = carrito.reduce(
-    (suma, item) => {
-
-        const ahorroUnitario =
-            (item.precioOriginal || item.precio) - item.precio;
-
-        return suma + (ahorroUnitario * item.cantidad);
-    },
-    0
-);
-
-    if(ahorroTotal > 0){
-
-    mensaje += `*AHORRO TOTAL: $${ahorroTotal.toLocaleString("es-CO")}*
-
-`;
-
-}
-
-mensaje += `*TOTAL: $${total.toLocaleString("es-CO")}*
-
-¿Podrían confirmarme disponibilidad y forma de pago?`;
-
-    const url =
-        `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensaje)}`;
-
-        if(typeof gtag === "function"){
-
-    const itemsAnalytics = carrito.map(item => ({
-        item_id: item.id,
-        item_name: item.nombre,
-        item_brand: item.marca,
-        item_category: item.categoria,
-        price: item.precio,
-        quantity: item.cantidad
-    }));
-
-    // El cliente inició el proceso de finalizar compra
-    gtag("event", "begin_checkout", {
-
-        currency: "COP",
-        value: total,
-        items: itemsAnalytics
-
-    });
-
-    // El pedido fue enviado hacia WhatsApp
-    gtag("event", "whatsapp_checkout", {
-
-        currency: "COP",
-        value: total,
-        items: itemsAnalytics
-
-    });
-
-}
-
-    window.open(url, "_blank");
-}
 // =====================================
 // FILTRO DE CATEGORÍAS
 // =====================================
@@ -4396,3 +4829,260 @@ finalizarCompra.addEventListener(
     "click",
     finalizarCompraWhatsApp
 );
+
+
+
+// =====================================
+// SELECCIÓN DEL TIPO DE ENTREGA
+// =====================================
+
+const opcionesEntrega =
+    document.querySelectorAll(".opcion-entrega");
+
+const camposCucuta =
+    document.getElementById("camposCucuta");
+
+const camposNacional =
+    document.getElementById("camposNacional");
+
+let tipoEntregaSeleccionado = "";
+
+opcionesEntrega.forEach(opcion => {
+
+    opcion.addEventListener("click", function(){
+
+        // Quitar selección anterior
+        opcionesEntrega.forEach(boton => {
+            boton.classList.remove("seleccionada");
+        });
+
+        // Marcar la opción elegida
+        this.classList.add("seleccionada");
+
+        // Guardar el tipo de entrega
+        tipoEntregaSeleccionado = this.dataset.entrega;
+
+        // Ocultar primero todos los campos adicionales
+        camposCucuta.classList.add("oculto");
+        camposNacional.classList.add("oculto");
+
+        // Domicilio en Cúcuta
+        if(tipoEntregaSeleccionado === "cucuta"){
+
+            camposCucuta.classList.remove("oculto");
+
+        }
+
+        // Envío a otra ciudad
+        if(tipoEntregaSeleccionado === "nacional"){
+
+            camposNacional.classList.remove("oculto");
+
+        }
+
+    });
+
+}); 
+
+// =====================================
+// VALIDAR DATOS DEL PEDIDO
+// =====================================
+
+const botonContinuarWhatsApp =
+    document.getElementById("continuarWhatsApp");
+
+const mensajeErrorPedido =
+    document.getElementById("mensajeErrorPedido");
+
+
+function mostrarErrorPedido(mensaje, campo = null){
+
+    mensajeErrorPedido.textContent = mensaje;
+
+    if(campo){
+        campo.focus();
+    }
+
+}
+
+
+botonContinuarWhatsApp.addEventListener("click", function(){
+
+    // Limpiar mensaje anterior
+    mensajeErrorPedido.textContent = "";
+
+
+    const nombre =
+        document.getElementById("nombrePedido");
+
+    const celular =
+        document.getElementById("celularPedido");
+
+
+    // Nombre y apellido
+    if(nombre.value.trim() === ""){
+
+        mostrarErrorPedido(
+            "Por favor, ingresa tu nombre y apellido.",
+            nombre
+        );
+
+        return;
+    }
+
+
+    // Celular
+    if(celular.value.trim() === ""){
+
+        mostrarErrorPedido(
+            "Por favor, ingresa tu número de celular.",
+            celular
+        );
+
+        return;
+    }
+
+
+    // Tipo de entrega
+    if(tipoEntregaSeleccionado === ""){
+
+        mostrarErrorPedido(
+            "Por favor, selecciona cómo deseas recibir tu pedido."
+        );
+
+        return;
+    }
+
+
+    // =====================================
+    // DOMICILIO EN CÚCUTA
+    // =====================================
+
+    if(tipoEntregaSeleccionado === "cucuta"){
+
+        const direccion =
+            document.getElementById("direccionCucuta");
+
+        const barrio =
+            document.getElementById("barrioCucuta");
+
+
+        if(direccion.value.trim() === ""){
+
+            mostrarErrorPedido(
+                "Por favor, ingresa la dirección de entrega.",
+                direccion
+            );
+
+            return;
+        }
+
+
+        if(barrio.value.trim() === ""){
+
+            mostrarErrorPedido(
+                "Por favor, ingresa el barrio.",
+                barrio
+            );
+
+            return;
+        }
+
+    }
+
+
+    // =====================================
+    // ENVÍO A OTRA CIUDAD
+    // =====================================
+
+    if(tipoEntregaSeleccionado === "nacional"){
+
+        const cedula =
+            document.getElementById("cedulaPedido");
+
+        const ciudad =
+            document.getElementById("ciudadPedido");
+
+        const direccion =
+            document.getElementById("direccionNacional");
+
+        const barrio =
+            document.getElementById("barrioNacional");
+
+
+        if(cedula.value.trim() === ""){
+
+            mostrarErrorPedido(
+                "Por favor, ingresa el número de cédula.",
+                cedula
+            );
+
+            return;
+        }
+
+
+        if(ciudad.value.trim() === ""){
+
+            mostrarErrorPedido(
+                "Por favor, ingresa la ciudad o municipio.",
+                ciudad
+            );
+
+            return;
+        }
+
+
+        if(direccion.value.trim() === ""){
+
+            mostrarErrorPedido(
+                "Por favor, ingresa la dirección de entrega.",
+                direccion
+            );
+
+            return;
+        }
+
+
+        if(barrio.value.trim() === ""){
+
+            mostrarErrorPedido(
+                "Por favor, ingresa el barrio o sector.",
+                barrio
+            );
+
+            return;
+        }
+
+    }
+
+
+    // =====================================
+// DATOS COMPLETOS
+// =====================================
+
+const datosCliente = obtenerDatosCliente();
+
+
+// Compra directa de un producto
+if(
+    tipoCompraPendiente === "producto" &&
+    compraProductoPendiente
+){
+
+    enviarCompraProductoWhatsApp(datosCliente);
+
+    return;
+
+}
+
+// Compra de varios productos desde el carrito
+
+if(tipoCompraPendiente === "carrito"){
+
+    enviarCarritoWhatsApp(datosCliente);
+
+    return;
+
+}
+
+});

@@ -3996,3 +3996,248 @@ max-height:85vh;
     background: #1ebe5d;
 }
 
+/* =====================================
+   MODAL DATOS DEL PEDIDO
+===================================== */
+
+.modal-datos-pedido{
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+
+    display: none;
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+   z-index: 100000;
+}
+
+.modal-datos-pedido.activo{
+    display: flex;
+}
+
+.modal-datos-contenido{
+    position: relative;
+
+    width: 100%;
+    max-width: 520px;
+    max-height: 90vh;
+
+    overflow-y: auto;
+
+    background: #ffffff;
+    border-radius: 18px;
+
+    padding: 30px 24px 26px;
+
+    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.25);
+}
+
+.cerrar-datos-pedido{
+    position: absolute;
+    top: 14px;
+    right: 14px;
+
+    width: 36px;
+    height: 36px;
+
+    border: none;
+    border-radius: 50%;
+
+    background: #f2f2f2;
+    color: #222;
+
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.modal-datos-contenido h2{
+    margin: 0 40px 6px 0;
+
+    font-size: 27px;
+    font-weight: 700;
+
+    color: #111;
+}
+
+.texto-datos-pedido{
+    margin: 0 0 24px;
+
+    color: #666;
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+.campo-pedido{
+    margin-bottom: 18px;
+}
+
+.campo-pedido label{
+    display: block;
+
+    margin-bottom: 7px;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    color: #222;
+}
+
+.campo-pedido input,
+.campo-pedido textarea{
+    width: 100%;
+
+    box-sizing: border-box;
+
+    border: 1px solid #d8d8d8;
+    border-radius: 10px;
+
+    padding: 12px 13px;
+
+    font-family: inherit;
+    font-size: 15px;
+
+    outline: none;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.campo-pedido input:focus,
+.campo-pedido textarea:focus{
+    border-color: #b89146;
+
+    box-shadow: 0 0 0 3px rgba(184, 145, 70, 0.12);
+}
+
+.campo-pedido textarea{
+    resize: vertical;
+}
+
+.opciones-entrega{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 9px;
+}
+
+.opcion-entrega{
+    border: 1px solid #d7d7d7;
+    border-radius: 10px;
+
+    background: #fff;
+    color: #222;
+
+    padding: 12px 8px;
+
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+.opcion-entrega:hover{
+    border-color: #b89146;
+}
+
+.opcion-entrega.seleccionada{
+    background: #111;
+    border-color: #111;
+    color: #fff;
+}
+
+.campos-entrega.oculto{
+    display: none;
+}
+
+.campos-obligatorios{
+    margin: 6px 0 18px;
+
+    font-size: 12px;
+    color: #777;
+}
+
+.continuar-whatsapp{
+    width: 100%;
+
+    border: none;
+    border-radius: 12px;
+
+    background: #25D366;
+    color: #fff;
+
+    padding: 14px 18px;
+
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s ease,
+        filter 0.2s ease;
+}
+
+.continuar-whatsapp:hover{
+    filter: brightness(0.96);
+}
+
+.continuar-whatsapp:active{
+    transform: scale(0.98);
+}
+
+
+/* =====================================
+   MODAL DATOS DEL PEDIDO - MÓVIL
+===================================== */
+
+@media (max-width: 600px){
+
+    .modal-datos-pedido{
+        padding: 12px;
+        align-items: flex-end;
+    }
+
+    .modal-datos-contenido{
+        max-height: 92vh;
+
+        border-radius: 20px 20px 12px 12px;
+
+        padding: 28px 18px 22px;
+    }
+
+    .modal-datos-contenido h2{
+        font-size: 24px;
+    }
+
+    .opciones-entrega{
+        grid-template-columns: 1fr;
+    }
+
+    .opcion-entrega{
+        text-align: left;
+
+        padding: 13px 14px;
+
+        font-size: 14px;
+    }
+
+}
+
+.mensaje-error-pedido{
+    min-height: 20px;
+    margin: 0 0 12px;
+
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.4;
+
+    color: #c62828;
+}
+

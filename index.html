@@ -1168,6 +1168,201 @@ Google Maps
 
 </div>
 
+<!-- =====================================
+     MODAL DATOS DEL PEDIDO
+===================================== -->
+
+<div id="modalDatosPedido" class="modal-datos-pedido">
+
+    <div class="modal-datos-contenido">
+
+        <button
+            type="button"
+            id="cerrarDatosPedido"
+            class="cerrar-datos-pedido"
+            aria-label="Cerrar formulario">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+
+        <h2>Datos para tu pedido</h2>
+
+        <p class="texto-datos-pedido">
+            Completa tus datos para continuar con la compra.
+        </p>
+
+        <div class="campo-pedido">
+            <label for="nombrePedido">
+                Nombre y apellido *
+            </label>
+
+            <input
+                type="text"
+                id="nombrePedido"
+                autocomplete="name">
+        </div>
+
+        <div class="campo-pedido">
+            <label for="celularPedido">
+                Celular *
+            </label>
+
+            <input
+                type="tel"
+                id="celularPedido"
+                autocomplete="tel">
+        </div>
+
+        <div class="campo-pedido">
+
+            <label>
+                ¿Cómo deseas recibir tu pedido? *
+            </label>
+
+            <div class="opciones-entrega">
+
+                <button
+                    type="button"
+                    class="opcion-entrega"
+                    data-entrega="tienda">
+                    Recoger en tienda
+                </button>
+
+                <button
+                    type="button"
+                    class="opcion-entrega"
+                    data-entrega="cucuta">
+                    Domicilio en Cúcuta
+                </button>
+
+                <button
+                    type="button"
+                    class="opcion-entrega"
+                    data-entrega="nacional">
+                    Envío a otra ciudad
+                </button>
+
+            </div>
+
+        </div>
+
+        <!-- CAMPOS PARA DOMICILIO EN CÚCUTA -->
+
+        <div
+            id="camposCucuta"
+            class="campos-entrega oculto">
+
+            <div class="campo-pedido">
+                <label for="direccionCucuta">
+                    Dirección *
+                </label>
+
+                <input
+                    type="text"
+                    id="direccionCucuta">
+            </div>
+
+            <div class="campo-pedido">
+                <label for="barrioCucuta">
+                    Barrio *
+                </label>
+
+                <input
+                    type="text"
+                    id="barrioCucuta">
+            </div>
+
+            <div class="campo-pedido">
+                <label for="indicacionesCucuta">
+                    Indicaciones adicionales
+                </label>
+
+                <textarea
+                    id="indicacionesCucuta"
+                    rows="3"></textarea>
+            </div>
+
+        </div>
+
+        <!-- CAMPOS PARA ENVÍO NACIONAL -->
+
+        <div
+            id="camposNacional"
+            class="campos-entrega oculto">
+
+            <div class="campo-pedido">
+                <label for="cedulaPedido">
+                    Cédula *
+                </label>
+
+                <input
+                    type="text"
+                    id="cedulaPedido">
+            </div>
+
+            <div class="campo-pedido">
+                <label for="ciudadPedido">
+                    Ciudad / municipio *
+                </label>
+
+                <input
+                    type="text"
+                    id="ciudadPedido">
+            </div>
+
+            <div class="campo-pedido">
+                <label for="direccionNacional">
+                    Dirección *
+                </label>
+
+                <input
+                    type="text"
+                    id="direccionNacional">
+            </div>
+
+            <div class="campo-pedido">
+                <label for="barrioNacional">
+                    Barrio / sector *
+                </label>
+
+                <input
+                    type="text"
+                    id="barrioNacional">
+            </div>
+
+            <div class="campo-pedido">
+                <label for="indicacionesNacional">
+                    Indicaciones adicionales
+                </label>
+
+                <textarea
+                    id="indicacionesNacional"
+                    rows="3"></textarea>
+            </div>
+
+        </div>
+
+        <p class="campos-obligatorios">
+            * Campos obligatorios
+        </p>
+
+        <p
+    id="mensajeErrorPedido"
+    class="mensaje-error-pedido">
+</p>
+
+        <button
+            type="button"
+            id="continuarWhatsApp"
+            class="continuar-whatsapp">
+
+            <i class="fa-brands fa-whatsapp"></i>
+            Continuar por WhatsApp
+
+        </button>
+
+    </div>
+
+</div>
 
 <script src="js/script.js"></script>
 
