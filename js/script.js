@@ -4701,16 +4701,44 @@ btnMenuMobile.addEventListener("click", function(){
     menuMobile.classList.toggle("activo");
 
 });
-// Cerrar el menú al seleccionar una opción
+// Cerrar el menú y desplazarse a la sección seleccionada
 menuMobile.querySelectorAll("a").forEach(enlace => {
 
-    enlace.addEventListener("click", function(){
+    enlace.addEventListener("click", function(event){
+
+        const destino = enlace.getAttribute("href");
+
+        if(destino && destino.startsWith("#")){
+
+            const seccion = document.querySelector(destino);
+
+            if(seccion){
+
+                event.preventDefault();
+
+                menuMobile.classList.remove("activo");
+
+                setTimeout(() => {
+
+                    seccion.scrollIntoView({
+                        behavior: "smooth",
+                        block: "start"
+                    });
+
+                }, 150);
+
+                return;
+
+            }
+
+        }
 
         menuMobile.classList.remove("activo");
 
     });
 
 });
+
 // Cerrar al tocar fuera del menú
 document.addEventListener("click", function(e){
 
