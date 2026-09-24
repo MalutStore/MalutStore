@@ -1238,6 +1238,7 @@ function obtenerColor(color){
 "gris azulado":"#76859f",
 celeste:"#4fc3f7",
         camel:"#c19a6b",
+        taupe:"#ac7e7e",
         grisclaro:"#d3d3d3",
         grisoscuro:"#555555",
         azulmarino:"#0b3d91",
