@@ -1233,6 +1233,7 @@ function obtenerColor(color){
         azul:"#1565c0",
 "azul claro":"#4fc3f7",
 "azul oscuro":"#0b3d91",
+"aguamarina":"#08f9d9",
 "azul jean":"#304974",
 "azul hielo":"#749de4",
 "gris azulado":"#76859f",
@@ -1257,6 +1258,7 @@ fucsia:"#ff1493",
         lima:"#bfff00",
         amarillo:"#fdd835",
         "amarillo pastel":"#fce26c",
+        mandarina:"#f96216",
         naranja:"#fb8c00",
         
         
